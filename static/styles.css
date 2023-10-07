@@ -4,6 +4,10 @@ body {
     text-align: center;
     background-color: #f0f0f0;
 }
+.error-label {
+    color: red;     /* Set text color to red */
+    font-weight: bold;  /* Make text bold */
+}
 .container {
     margin: 100px auto;
     width: 500px;
