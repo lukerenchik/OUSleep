@@ -26,14 +26,20 @@ def login():
     username = request.form.get('username')
     password = request.form.get('password')
 
-    # Check if the username exists and the password is correct.
-    if username in users and check_password(password, users[username]['password_hash']):
-        # Successful login, set session variables or cookies as needed.
-        session['username'] = username
-        return redirect(url_for('homepage'))
-    else:
-        # Invalid login, handle accordingly (e.g., display an error message).
-        return "Invalid username or password"
+    # Check if the username exists.
+    if username in users:
+        # Hash the provided password for comparison.
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
+
+        # Check if the provided password matches the stored password_hash.
+        if check_password(password, users[username]['password_hash']):
+            # Successful login, set session variables or cookies as needed.
+            session['username'] = username
+            return redirect(url_for('homepage'))
+
+    # Invalid login, display an error message.
+    flash("Invalid username or password", "error")
+    return redirect(url_for('index'))
 
 
 @app.route('/homepage')
