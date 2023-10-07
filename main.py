@@ -16,9 +16,9 @@ def index():
     return render_template('preloginhome.html')
 
 
-@app.route('/forgotpw')
-def forgotpw():
-    return render_template('forgotpw.html')
+@app.route('/ForgotPW')
+def ForgotPW():
+    return render_template('ForgotPW.html')
 
 
 @app.route('/login', methods=['POST'])
