@@ -4,28 +4,7 @@
     <meta charset="UTF-8">
     <title>Homepage</title>
     <link rel="stylesheet" type="text/css" href="static/styles.css">
-    <style>
-        /* Add your CSS styles for the calendar and circle widget here */
-        /* For simplicity, I'm using basic styles */
-        #calendar {
-            width: 80%;
-            margin: 0 auto;
-            border: 1px solid #ccc;
-        }
-        .circle-widget {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .circle {
-            width: 100px;
-            height: 100px;
-            background-color: #007BFF;
-            color: #fff;
-            border-radius: 50%;
-            line-height: 100px;
-            font-size: 24px;
-        }
-    </style>
+    <!-- ... (your existing styles) -->
 </head>
 <body>
     <div class="container">
@@ -48,6 +27,8 @@
     <!-- For example, include FullCalendar library here -->
     <!-- <script src="fullcalendar.min.js"></script> -->
     <!-- Initialize the calendar widget and provide data -->
+<!-- Include FullCalendar from a CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.7.0/fullcalendar.min.js"></script>
 
     <script>
         // Sample data for the calendar (you should replace this with your data)
@@ -70,6 +51,25 @@
             });
             calendar.render();
         });
+
+        // Auto-logout timer
+        var logoutTimer;
+
+        function resetLogoutTimer() {
+            clearTimeout(logoutTimer);
+            logoutTimer = setTimeout(function () {
+                // Redirect the user to the preloginhome page after inactivity
+                window.location.href = '/'; // Adjust the URL as needed
+            }, 60*1000*10); // 10 minutes (in milliseconds)
+        }
+
+        // Add event listeners for user activity
+        document.addEventListener('mousemove', resetLogoutTimer);
+        document.addEventListener('keypress', resetLogoutTimer);
+
+        // Initialize the timer when the page loads
+        resetLogoutTimer();
     </script>
 </body>
 </html>
+
