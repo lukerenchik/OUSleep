@@ -18,7 +18,11 @@ def index():
 
 @app.route('/ForgotPW')
 def ForgotPW():
+    
     return render_template('ForgotPW.html')
+  
+
+    
 
 
 @app.route('/login', methods=['POST'])

@@ -3,55 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Register Page</title>
-   
-
-    
-
+    <link rel="stylesheet" type="text/css" href="static/ForgotPWCSS/background.css">
 
     <style>
 
-        p {
-            margin-top:0;
-            font-family: Verdana;
-            text-align: center;
-        }
-
-        .Website-Title {
-            
-            font-family: "Bauhaus 93";
-            font-size: 28px;
-
-        }
-
-        .ForgotPW-Title {
-            
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 110px;
-            margin-bottom: 20px;
-
-        }
-
-        .Reset-Desc {
-
-            font-size: 13px;
-        }
-
-        .Login_Sign-Up_Page {
-
-            margin-top: 250px;
-            font-size: 15px;
-            color: rgb(31,142,240);
-            
-            
-        }
-
-        
-
-     
-
+  
     </style>
-
 
 
 </head>
@@ -60,11 +17,15 @@
 
 <body>
 
-        
     <p class="Website-Title">
         OU Sleep
     </p>
+ 
 
+
+   <div class="Reset_Password_Template"> 
+
+   
     <p class="ForgotPW-Title">
         Reset Your Password
       
@@ -72,18 +33,28 @@
 
     <p class="Reset-Desc">
         Lost your Password? 
-        Please enter your email address or phone number
+        Please enter your email address
     </p>
 
-    <p class="Login_Sign-Up_Page">
-       <span class="Login_Page">Back to Login</span> &emsp; &emsp; &emsp; 
+    <form action="/Email_Confirm" method="post"> 
+     <label for="username"> </label> <input class="Email-Bar" type="text" id="email" name="email"
+        placeholder="Email" required>
+
+      <button class="Next-Page-Button" type="submit">Next</button>
+    </form>
+
+    <p class="Login-Sign-Up-Text">
+       <a href="http://127.0.0.1:5000/" class="Login-link">< Back to Login</a> 
+       &emsp; &emsp; &emsp; 
        &emsp; &emsp; &emsp; &emsp; &emsp;
-       &emsp; &emsp; <span class="Sign_Up_Page">Sign Up</span>
+       &emsp; &emsp; &emsp; &emsp; <a href="http://127.0.0.1:5000/signup?" 
+       class="SignUp-Link">Sign Up ></a>
     </p>
 
+   </div>
 
    
-    
+
 
  
 </body>
