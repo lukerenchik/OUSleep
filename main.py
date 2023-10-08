@@ -1,6 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-import json
 import hashlib
+import json
+
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+from forms import signupForm
 
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
@@ -58,21 +60,19 @@ def homepage():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    form = signupForm()
+    if not form.validate_on_submit():
+        return render_template('signup.html', title='Sign Up', form=form)
+
     if request.method == 'POST':
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
-        confirm_password = request.form.get('confirm_password')
         dob = request.form.get('dob')
-
-        # Check if the password and confirm_password match.
-        if password != confirm_password:
-            flash("Passwords do not match, please try again.", "error")
-            return redirect(url_for('signup'))
 
         # Check if the username already exists.
         if username in users:
-            print("Username already exists, please choose another one.", "error")
+            flash("Username already exists, please choose another one.", "error")
             return redirect(url_for('signup'))
 
         # Hash the password.
@@ -90,7 +90,8 @@ def signup():
 
         print("Account created successfully. You can now log in.", "success")
         return redirect(url_for('index'))
-    return render_template('signup.html')
+
+    return render_template('signup.html',title='Sign Up',form=form)
 
 
 # Password hashing function (you should use a secure library for this).
