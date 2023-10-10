@@ -5,6 +5,7 @@
     <title>Register Page</title>
     <link rel="stylesheet" type="text/css" href="static/ForgotPWCSS/background.css">
 
+
     <style>
 
   
@@ -16,6 +17,7 @@
 
 
 <body>
+   
 
     <p class="Website-Title">
         OU Sleep
@@ -25,7 +27,22 @@
 
    <div class="Reset_Password_Template"> 
 
-   
+    <div class="ErrorMessage">
+       
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="User-error-messages">
+                {% for message in messages %}
+                    <p class="User-error-label">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+     
+    </div>
+
+    
+
     <p class="ForgotPW-Title">
         Reset Your Password
       
@@ -33,16 +50,18 @@
 
     <p class="Reset-Desc">
         Lost your Password? 
-        Please enter your email address
+        Please enter your Email address
     </p>
+    <form action="/Reset_Password" method="post">  
+        <div> 
+            <label for="email"> </label> <input class="Email-Bar" autocomplete="off" 
+            type="email" id="email" name="email"
+            placeholder="Email" required>
+        </div>
+            <button class="Next-Page-Button" type="submit"> Reset Password </a></button>
+        </form>
 
-    <form action="/Email_Confirm" method="post"> 
-     <label for="username"> </label> <input class="Email-Bar" type="text" id="email" name="email"
-        placeholder="Email" required>
-
-      <button class="Next-Page-Button" type="submit">Next</button>
-    </form>
-
+    
     <p class="Login-Sign-Up-Text">
        <a href="http://127.0.0.1:5000/" class="Login-link">< Back to Login</a> 
        &emsp; &emsp; &emsp; 
