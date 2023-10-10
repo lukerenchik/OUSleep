@@ -2,11 +2,14 @@ import hashlib
 import json
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from forms import signupForm
+from forms import signupForm, ResetrequestForm # Added Rest Form import here
+
 
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
+
 app.secret_key = 'your_secret_key'  # Replace with a secure secret key.s
+
 
 # Load user data from the JSON file.
 with open('users.json', 'r') as file:
@@ -20,9 +23,32 @@ def index():
 
 @app.route('/ForgotPW')
 def ForgotPW():
-    
+
     return render_template('ForgotPW.html')
-  
+        
+    
+
+@app.route('/Reset_Password', methods=['POST'])
+def Reset_Password():
+    
+    input_email = request.form.get('email') 
+    
+    email_exists = any(user.get('email') == input_email for user in users.values()) # input checks to see if email is apart of .json file
+        
+    if email_exists:  #if email is registered to a user, goes to Reset Password page
+        flash("Reset Request Email Has been sent! Please check your email!", "Sent-Successfully")
+        return render_template('Reset_Password.html')   
+    
+    else:
+        flash("The Email Address Entered is not regeistered with a user, please try again", "User-error")    
+        return redirect(url_for('ForgotPW'))
+        
+    
+    
+   
+    
+        
+
 
     
 
@@ -74,9 +100,15 @@ def signup():
         if username in users:
             flash("Username already exists, please choose another one.", "error")
             return redirect(url_for('signup'))
+        
+        elif email in [user_data.get('email') for user_data in users.values()]: # Added so that there will be no duplicate emails in sign up
+            flash("Email already associated with an account, please use another email.", "error")
+            return redirect(url_for('signup'))
 
         # Hash the password.
         password_hash = hashlib.sha256(password.encode()).hexdigest()
+        
+
 
         # Save user data to users.json.
         users[username] = {
@@ -97,6 +129,8 @@ def signup():
 # Password hashing function (you should use a secure library for this).
 def check_password(password, hashed_password):
     return hashlib.sha256(password.encode()).hexdigest() == hashed_password
+
+    
 
 
 if __name__ == '__main__':

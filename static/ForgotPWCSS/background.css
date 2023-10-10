@@ -1,4 +1,4 @@
-
+/* styles.css for ForgotPW */
 p {
     margin-top:0;
     font-family: Verdana;
@@ -77,24 +77,41 @@ p {
     
     font-size: 15px;
     margin-top: 35px;
-    margin-left: 220px;
+    margin-left: 170px;
     padding: 7px;
     padding-left: 20px;
     padding-right: 20px;
     border: none;
     border-radius: 4px;
-    color:rgb(0, 0, 0);
     background-color: rgb(73, 182, 225);
     transition-duration: 0.3s;
     cursor: pointer;
+    
 
 }
 .Next-Page-Button:hover{
     
     border-color: black;
     background-color: rgb(30, 30, 142);
-    color:rgb(255, 255, 255);
+    text-decoration: none;
+    color:rgb(225, 225, 225);
+    
+}
 
+.Next-Link {
+    text-decoration: none;
+    color:rgb(0, 0, 0);
+}
+.Next-Link:hover {
+    color:rgb(225, 225, 225);
+}
+    .ErrorMessage {
+        color:red;
+
+    }
+.Email-Sent {
+    color:rgb(74, 221, 29);
+    font-weight: bolder;
 }
 
 
