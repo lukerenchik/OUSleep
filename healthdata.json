@@ -1,0 +1,14 @@
+{
+    "2023-01-01": {
+        "Sedentary Minutes": 120,
+        "Lightly Active Minutes": 45,
+        ...
+        "DailyCalories": 2300,
+        "Quality of Sleep Score": 78
+    },
+    "2023-01-02": {
+        ...
+    },
+    ...
+}
+
