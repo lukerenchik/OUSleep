@@ -2,7 +2,7 @@ import hashlib
 import json
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
-from forms import signupForm, ResetrequestForm # Added Rest Form import here
+from forms import signupForm # Added Rest Form import here
 
 
 
