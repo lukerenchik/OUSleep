@@ -19,10 +19,12 @@ for user_id, dates in data.items():
             # Compute the ratio and add it to the dictionary
             ratio = stats["TotalMinutesAsleep"] / stats["TotalTimeInBed"]
             stats["SleepToBedRatio"] = ratio
-         
-
+            
+            # Remove the unwanted features for ML model input
+            reduced_stats = {k: v for k, v in stats.items() if k not in ["TotalMinutesAsleep", "TotalTimeInBed", "SleepToBedRatio"]}
+            
             # Appending data for ML model
-            X.append(list(stats.values())[:-1])  # Exclude the last value, which is the ratio we just calculated
+            X.append(list(reduced_stats.values()))
             y.append(stats["SleepToBedRatio"])
 
 # Optionally, to save the updated JSON data
@@ -51,12 +53,11 @@ sample_user_id = list(data.keys())[0]
 sample_date = list(data[sample_user_id].keys())[0]
 features = list(data[sample_user_id][sample_date].keys())
 features.remove("SleepToBedRatio")
-
-
+features.remove("TotalMinutesAsleep")
+features.remove("TotalTimeInBed")
 
 # Feature importances (if you're interested in seeing which parameters are most influential)
 importances = rf_regressor.feature_importances_
 sorted_indices = np.argsort(importances)[::-1]
 for index in sorted_indices:
     print(f"{features[index]}: {importances[index]}")
-
