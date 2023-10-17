@@ -6,6 +6,7 @@ import time
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from forms import signupForm
+from piechart import pie_html
 from flask_mail import Mail, Message #use pip install Flask-Mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <!-- ... (your existing styles) -->
+</head>
+<body>
+    <div class="container">
+        <!-- Display the username at the top -->
+        <h1>Hello {{ username }}</h1>
+
+        <!-- Calendar widget -->
+        <div id="calendar"></div>
+
+        <!-- Circle widget for sleep score -->
+        <div class="circle-widget">
+            <div class="circle">
+                {{ sleep_score }}
+            </div>
+            <p>Sleep Score</p>
+        </div>
+    </div>
+
+    <!-- Include JavaScript libraries as needed -->
+    <!-- For example, include FullCalendar library here -->
+    <!-- <script src="fullcalendar.min.js"></script> -->
+    <!-- Initialize the calendar widget and provide data -->
+<!-- Include FullCalendar from a CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.7.0/fullcalendar.min.js"></script>
+
+    <script>
+        // Sample data for the calendar (you should replace this with your data)
+        var events = [
+            {
+                title: 'Event 1',
+                start: '2023-09-15',
+                end: '2023-09-16',
+                color: 'red' // Replace with the desired color gradient logic
+            },
+            // Add more events here
+        ];
+
+        // Initialize the FullCalendar widget
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                events: events,
+                // Add more calendar options here
+            });
+            calendar.render();
+        });
+
+        // Auto-logout timer
+        var logoutTimer;
+
+        function resetLogoutTimer() {
+            clearTimeout(logoutTimer);
+            logoutTimer = setTimeout(function () {
+                // Redirect the user to the preloginhome page after inactivity
+                window.location.href = '/'; // Adjust the URL as needed
+            }, 60*1000*10); // 10 minutes (in milliseconds)
+        }
+
+        // Add event listeners for user activity
+        document.addEventListener('mousemove', resetLogoutTimer);
+        document.addEventListener('keypress', resetLogoutTimer);
+
+        // Initialize the timer when the page loads
+        resetLogoutTimer();
+    </script>
+</body>
+</html>
+
