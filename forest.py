@@ -52,5 +52,10 @@ features = [
 # Feature importances (if you're interested in seeing which parameters are most influential)
 importances = rf_regressor.feature_importances_
 sorted_indices = np.argsort(importances)[::-1]
+
+class forest_result():
+	data_arr = [features, importances]
+	return data_arr
+
 for index in sorted_indices:
     print(f"{features[index]}: {importances[index]}")
