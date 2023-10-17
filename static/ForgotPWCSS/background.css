@@ -66,6 +66,7 @@ p {
     margin: 100px auto;
     width: 500px;
     padding: 20px;
+    padding-top: 5px;
     border-style: solid;
     border-width: 5px;
     border-radius: 8px
@@ -98,6 +99,26 @@ p {
     
 }
 
+.error-messages {
+     /* Red background for error messages */
+    color: #f40e0e; 
+  
+}
+
+.success-messages {
+     /* Green background for success messages */
+    color: #25d253; 
+ 
+}
+
+
+
+
+
+
+
+
+
 .Next-Link {
     text-decoration: none;
     color:rgb(0, 0, 0);
@@ -105,12 +126,10 @@ p {
 .Next-Link:hover {
     color:rgb(225, 225, 225);
 }
-    .ErrorMessage {
-        color:red;
-
-    }
-.Email-Sent {
-    color:rgb(74, 221, 29);
+ 
+v
+.Email-label {
+    color:rgba(242, 183, 64, 0.937);
     font-weight: bolder;
 }
 
