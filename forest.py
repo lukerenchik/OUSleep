@@ -20,7 +20,6 @@ for user_id, dates in data.items():
             ratio = stats["TotalMinutesAsleep"] / stats["TotalTimeInBed"]
             stats["SleepToBedRatio"] = ratio
          
-
             # Appending data for ML model
             X.append(list(stats.values())[:-1])  # Exclude the last value, which is the ratio we just calculated
             y.append(stats["SleepToBedRatio"])
@@ -52,16 +51,20 @@ sample_date = list(data[sample_user_id].keys())[0]
 features = list(data[sample_user_id][sample_date].keys())
 features.remove("SleepToBedRatio")
 
-
-
 # Feature importances (if you're interested in seeing which parameters are most influential)
 importances = rf_regressor.feature_importances_
 sorted_indices = np.argsort(importances)[::-1]
 
-class forest_result():
-	data_arr = [features, importances]
-	return data_arr
+class ForestResult:
+    def __init__(self, features, importances):
+        self.features = features
+        self.importances = importances
+        
+    def display_importances(self):
+        for index in sorted_indices:
+            print(f"{self.features[index]}: {self.importances[index]}")
 
-for index in sorted_indices:
-    print(f"{features[index]}: {importances[index]}")
+result = ForestResult(features, importances)
+result.display_importances()
+
 
