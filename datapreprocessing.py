@@ -1,15 +1,30 @@
 import pandas as pd
 import json
-if __name__ == "__main__":
-    df = pd.read_csv("/Users/user/PycharmProjects/OUSleep/fitabaseexampledata/DailyActivity/ID 1003_dailyActivity_20171001_20171007.csv")
-    df2 = pd.read_csv("/Users/user/PycharmProjects/OUSleep/fitabaseexampledata/HeartRate/ID 1003_dailyRestingHeartRate_20171001_20171007.csv")
-    df3 = pd.read_csv("/Users/user/PycharmProjects/OUSleep/fitabaseexampledata/SleepClassic/ID 1003_sleepDay_20171001_20171007.csv")
 
-    merged_df = pd.merge(df, df2, on="Date", how="left")
-    merged_df = pd.merge(merged_df, df3, on="Date", how="left")
+# Define the file path and columns to be selected
+file_path = "/Users/user/PycharmProjects/OUSleep/BaxaMergedData.csv"
+columns = ["Id", "date", "TotalSteps", "TotalDistance", "VeryActiveDistance", "ModeratelyActiveDistance", 
+           "LightActiveDistance", "SedentaryActiveDistance", "VeryActiveMinutes", "FairlyActiveMinutes",
+           "LightlyActiveMinutes", "SedentaryMinutes", "RestingHeartRate", "TotalMinutesAsleep", "TotalTimeInBed"]
 
-    filtered_df = merged_df[["Date", "TotalSteps", "TotalDistance","VeryActiveMinutes","FairlyActiveMinutes","LightlyActiveMinutes","SedentaryMinutes","Calories", "TotalMinutesAsleep", "TotalTimeInBed", "RestingHeartRate_x"]]
-    result_dict = filtered_df.set_index("Date").to_dict(orient="index")
+# Read the CSV file
+df = pd.read_csv(file_path, usecols=columns)
 
-    with open("filtered_data.json", "w") as json_file:
-        json.dump(result_dict, json_file)
+# Convert DataFrame to the desired nested dictionary structure
+nested_dict = {}
+for _, row in df.iterrows():
+    id_val = row['Id']
+    date_val = row['date']
+    
+    if id_val not in nested_dict:
+        nested_dict[id_val] = {}
+    
+    # Add data under the specific 'date'
+    nested_dict[id_val][date_val] = row.drop(['Id', 'date']).to_dict()
+
+# Save the nested dictionary to JSON
+output_path = "/Users/user/PycharmProjects/OUSleep/filtered_baxa.json"
+with open(output_path, 'w') as outfile:
+    json.dump(nested_dict, outfile)
+
+print(f"Filtered data saved to {output_path}")
