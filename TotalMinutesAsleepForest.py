@@ -14,19 +14,15 @@ y = []
 
 for user_id, dates in data.items():
     for date, stats in dates.items():
-        # Check if both keys exist in the dictionary to avoid KeyError
+        # Check if keys exist in the dictionary to avoid KeyError
         if "TotalMinutesAsleep" in stats and "TotalTimeInBed" in stats:
-            # Compute the ratio and add it to the dictionary
-            ratio = stats["TotalMinutesAsleep"] / stats["TotalTimeInBed"]
-            stats["SleepToBedRatio"] = ratio
-         
+            
+            # Remove the unwanted features for ML model input
+            reduced_stats = {k: v for k, v in stats.items() if k not in ["TotalTimeInBed", "TotalMinutesAsleep"]}
+            
             # Appending data for ML model
-            X.append(list(stats.values())[:-1])  # Exclude the last value, which is the ratio we just calculated
-            y.append(stats["SleepToBedRatio"])
-
-# Optionally, to save the updated JSON data
-with open("updated_data.json", "w") as f:
-    json.dump(data, f, indent=4)
+            X.append(list(reduced_stats.values()))
+            y.append(stats["TotalMinutesAsleep"])
 
 # Splitting data into training and testing set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -49,22 +45,11 @@ print(f"Mean Squared Error: {mse}")
 sample_user_id = list(data.keys())[0]
 sample_date = list(data[sample_user_id].keys())[0]
 features = list(data[sample_user_id][sample_date].keys())
-features.remove("SleepToBedRatio")
+features.remove("TotalTimeInBed")
+features.remove("TotalMinutesAsleep")
 
 # Feature importances (if you're interested in seeing which parameters are most influential)
 importances = rf_regressor.feature_importances_
 sorted_indices = np.argsort(importances)[::-1]
-
-class ForestResult:
-    def __init__(self, features, importances):
-        self.features = features
-        self.importances = importances
-        
-    def display_importances(self):
-        for index in sorted_indices:
-            print(f"{self.features[index]}: {self.importances[index]}")
-
-result = ForestResult(features, importances)
-result.display_importances()
-
-
+for index in sorted_indices:
+    print(f"{features[index]}: {importances[index]}")
