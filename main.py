@@ -4,10 +4,11 @@ import secrets
 import hashlib
 import time
 
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from forms import signupForm
 from flask_mail import Mail, Message #use pip install Flask-Mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from flask_session import Session # pip install flask_session
 
 
 
@@ -28,6 +29,9 @@ mail = Mail(app)
 app.secret_key = 'your_secret_key'  # Replace with a secure secret key.s
 
 s = URLSafeTimedSerializer('439D699B2F1C8BCAD6616AC339CA4')
+
+app.config['SESSION_TYPE'] = 'filesystem'
+Session(app)
 
 
 
@@ -58,13 +62,15 @@ def Reset_Password():
         
     if email_exists: #if email is registered to a user, goes to Reset Password page
         
+        session['email'] = input_email
+        
         token = s.dumps(input_email, salt='reset-password')
         
-        link_to_route = url_for('Reset_Access', token=token, _external=True)
+        link_to_route = url_for('PWAccess', token=token, _external=True)
         
         msg_title = "Reset Your OU Sleep Account Password"
         
-        msg_body = f"Please click <a href='{link_to_route}'>here</a> to go to reset your password. "
+        msg_body = f"Please click <a href='{link_to_route}'>here</a> to go to reset your password. " # The email details
         
         
         
@@ -81,9 +87,6 @@ def Reset_Password():
             flash("There was a problem in sending the Reset Password link, Please try again", "error")    
         return redirect(url_for('ForgotPW'))
         
-        
-
-         
     
      
     
@@ -95,11 +98,11 @@ def Reset_Password():
     
    
     
-@app.route('/PWAccess/<token>')
+@app.route('/PWAccess/<token>') 
 def PWAccess(token):
     try:
         
-        input_email = s.loads(token, salt='reset-password', max_age=200)
+        input_email = s.loads(token, salt='reset-password', max_age=3600) # 3600 sec. till token expires for link to Reset_Access
         
         
     except SignatureExpired:
@@ -115,7 +118,54 @@ def Reset_Access():
 
 
 
+@app.route('/ResetPW', methods=['GET', 'POST'])
+def ResetPW():
+    
+    input_email = session.get('email')
 
+    if request.method == 'POST':
+        new_password = request.form['password']
+        confirm_password = request.form['Confirm_password']
+        special_chars = '!@#$%^&*()'
+
+        if new_password == confirm_password:
+            if len(new_password) < 6:  #checks if password is more than 6 characters
+                flash("Password must be at least 5 characters", "error") 
+                return redirect(url_for('Reset_Access'))
+
+            if not any(char in special_chars for char in new_password): #checks if password has a special character
+                flash("Password must have a special character", "error")
+                return redirect(url_for('Reset_Access'))
+
+            # Retrieve the user's information from users.json
+            user_info = None
+            for user in users.values():
+                if user.get('email') == input_email:
+                    user_info = user
+                    break
+
+            if user_info is not None:
+                # Hash the new password
+                new_password_hash = hashlib.sha256(new_password.encode()).hexdigest()
+
+                # Update the user's information with the new password hash
+                user_info['password_hash'] = new_password_hash
+
+                # Save the updated user data back to users.json
+                with open('users.json', 'w') as file:
+                    json.dump(users, file)
+
+                flash("Password successfully updated!", "success")
+                return redirect(url_for('ForgotPW'))
+            else:
+                flash("User not found with the given email", "error")
+                return redirect(url_for('Reset_Access'))
+        else:
+            flash("Passwords do not match, Please try again", "error")
+            return redirect(url_for('Reset_Access'))
+   
+
+ 
 
     
 
