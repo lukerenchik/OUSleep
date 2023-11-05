@@ -3,13 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
-    <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <link rel="stylesheet" type="text/css" href="static\HompageCSS\homestyles.css">
+    
     <!-- ... (your existing styles) -->
+    
+
 </head>
 <body>
-    <div class="container">
+
+  
+
+
+    <div class="basecontainer">
+
+        <div class="Tab-Layout">
+        
+            <p class=OrganizationHeader> OUSleep
+            </p>
+            
+            <p class="Dashboard"> 
+                <a href="http://127.0.0.1:5000/homepage" class="Dashboard-Link"> Dashboard </a>
+
+                
+        </p>
+
+        <p class="Statistics">Statistics </p>
+        </div>
+
+
+
+        <div class="WelcomeUser">
         <!-- Display the username at the top -->
-        <h1>Hello {{ username }}</h1>
+        <p>Hello {{ username }}</p>
+
+        </div>
 
         <!-- Calendar widget -->
         <div id="calendar"></div>
@@ -21,6 +48,9 @@
             </div>
             <p>Sleep Score</p>
         </div>
+
+
+
     </div>
 
     <!-- Include JavaScript libraries as needed -->

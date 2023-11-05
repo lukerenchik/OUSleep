@@ -1,4 +1,4 @@
-/* styles.css for ForgotPW */
+/* styles.css for ForgotPW  and Reset_Access*/
 p {
     margin-top:0;
     font-family: Verdana;
@@ -47,7 +47,7 @@ p {
     text-decoration: underline;
 }
 
-.Email-Bar {
+.Input-Bar {
 
     margin-left: 30px;
     margin-top: 16px;
@@ -59,6 +59,20 @@ p {
     position: static;
     
     
+}
+
+
+.Confirm_Input-Bar {
+
+    margin-left: 30px;
+    margin-top: 20px;
+    width: 430px;
+    height: 32px;
+    font-size: 17px;
+    font-family: "Comic Sans MS";
+    border-radius: 6px;
+    position: static;
+
 }
 
 .Reset_Password_Template{
@@ -79,6 +93,7 @@ p {
     font-size: 15px;
     margin-top: 35px;
     margin-left: 170px;
+    margin-bottom: 20px;
     padding: 7px;
     padding-left: 20px;
     padding-right: 20px;
@@ -110,7 +125,6 @@ p {
     color: #25d253; 
  
 }
-
 
 
 
