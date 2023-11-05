@@ -12,5 +12,5 @@ fig = go.Figure(data=[go.Pie(labels=features, values=importances)])
 #create html file
 fig_html = fig.write_html('chart.html')
 
-class pie_html():
-	return fig_html
+#class pie_html():
+	#return fig_html

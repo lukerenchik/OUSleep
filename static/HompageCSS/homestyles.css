@@ -1,0 +1,102 @@
+/* styles.css */
+p {
+    font-family: "Arial";
+    text-align: center;
+   
+    
+}
+
+body {
+    background-image: url('Used_Images/bimg3.png');
+    background-size: cover; /* Scales the image to cover the entire container */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
+    background-position: center center;
+    
+}
+
+.Tab-Layout {
+    width: 150px; /* Adjust the width as needed for your left tab */
+    background-color: rgba(14, 60, 210, 0.879);
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    box-sizing: border-box; /* Includes padding in the width */
+    color: #fff;
+    border-radius: 8px 1px 1px 8px;
+}
+
+.OrganizationHeader {
+    font-size: 20px;
+    padding: -2px;
+    margin-top: 8px;
+    font-family: "Bauhaus 93";
+    margin-left: 10px;
+    text-align: left;
+    
+    }
+
+    .Dashboard {
+
+        font-size: 14px;
+        padding-top: 30px;
+      
+    }
+
+    .Dashboard-Link {
+
+        color: #cbcaca;
+    }
+
+    .Statistics {
+        font-size: 15px;
+        padding: 20px;
+        color: #cbcaca;
+    }
+
+
+
+.WelcomeUser {
+    text-align: left;
+    margin-right: 10px;
+}
+
+
+
+.WelcomeUser {
+    height: 40px;
+}
+
+
+.error-label {
+    color: red;     /* Set text color to red */
+    font-weight: bold;  /* Make text bold */
+}
+
+.basecontainer {
+    margin: 100px auto;
+    width: 800px;
+    height: 560px;
+    background-color: #fff;
+    border: 1px none #ffffff;
+    border-radius: 8px;
+    
+    box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.1);
+   display: flex;
+   
+}
+
+button {
+    width: 20%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+a {
+    text-decoration: none;
+    color: #007BFF;
+}
