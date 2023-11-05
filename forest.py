@@ -64,7 +64,10 @@ class ForestResult:
         for index in sorted_indices:
             print(f"{self.features[index]}: {self.importances[index]}")
 
+    @classmethod
+    def get_results(cls):
+        return [features, importances]
+
+
 result = ForestResult(features, importances)
 result.display_importances()
-
-
