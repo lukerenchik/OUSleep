@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
 
 # Load the data from filtered_baxa.json
-with open('filtered_baxa.json', 'r') as file:
+with open('C:\Users\chris\OneDrive\Desktop\VS SleepStudy Project\OUSleep\fitabaseexampledata\filtered_data.json', 'r') as file:
     data = json.load(file)
 
 # Lists to collect data for machine learning
