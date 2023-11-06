@@ -37,6 +37,7 @@ ideal_values = {
 
 positive_parameters = ["LightlyActiveMinutes", "TotalSteps", "FairlyActiveMinutes", "VeryActiveMinutes"]
 
+
 def calculate_score(user_value, ideal_value, weight, std_dev):
     score = 0
     if ideal_value == 480:  # If we are evaluating "TotalMinutesAsleep"
@@ -57,6 +58,7 @@ def calculate_score(user_value, ideal_value, weight, std_dev):
             score = weight * (1 - exp(z))
     return min(max(score, 0), weight)
 
+
 # Load data from JSON, calculate standard deviations, and the rest remains the same...
 # Load data from JSON
 with open("JSON Data/updated_data.json", "r") as file:
@@ -65,7 +67,8 @@ with open("JSON Data/updated_data.json", "r") as file:
 # Calculate standard deviations for each parameter
 std_devs = {}
 for key in ideal_values:
-    all_values = [daily_data[key] for user_data in data.values() for daily_data in user_data.values() if key in daily_data]
+    all_values = [daily_data[key] for user_data in data.values() for daily_data in user_data.values() if
+                  key in daily_data]
     if not all_values:  # If all_values list is empty
         std_devs[key] = 0
         continue
@@ -87,15 +90,29 @@ for user_id, user_data in data.items():
                 user_value = daily_data[key]
                 ideal_value = ideal_values[key]
                 std_dev = std_devs[key]
-                score = calculate_score(key, user_value, ideal_value, weight, std_dev)
+
+                # Calculate the score for the current key and update the total score
+                score = calculate_score(user_value, ideal_value, weight, std_dev)
                 total_score += score
                 score_composition[key] = score
-        
-        total_score = min(total_score, 1)  # Cap the total score to a maximum of 1
+
+                # Check if the user gets extreme penalty for the current day
+                if key == 'TotalMinutesAsleep' and user_value < 180:
+                    prev_day_extreme_penalty_users.add(user_id)
+
+        # Check for lingering penalty from the previous day
+        if user_id in prev_day_extreme_penalty_users:
+            total_score -= 2 * weights['TotalMinutesAsleep']
+            prev_day_extreme_penalty_users.remove(user_id)
+
+        # Cap the total score to a maximum of 1
+        total_score = min(total_score, 1)
         health_scores[user_id][date] = total_score
+
 
 def get_score_data():
     return total_score, score_composition
+
 
 # Save sleep_scores to a new JSON file
 with open("JSON DATA/sleep_scores.json", "w") as file:

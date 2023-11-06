@@ -9,15 +9,13 @@ sleep_score_values = list(sleep_score_composition.values())
 
 total_health_score, health_score_composition = healthScore.get_score_data()
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 def pie_html():
 	return fig_html
-=======
+
 #class pie_html():
 	#return fig_html
->>>>>>> 9e50f44af60296f3cfcd302cdce032787c414aba
-=======
+
 health_score_keys = list(health_score_composition.keys())
 health_score_values = list(health_score_composition.values())
 
@@ -37,4 +35,4 @@ class PieHtml:
 
     def get_scores_to_display(self):
         return all_scores
->>>>>>> d6c3d59fd01582e5110797d9812941ab3f8bbc04
+
