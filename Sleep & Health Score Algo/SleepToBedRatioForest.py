@@ -59,5 +59,25 @@ features.remove("TotalTimeInBed")
 # Feature importances (if you're interested in seeing which parameters are most influential)
 importances = rf_regressor.feature_importances_
 sorted_indices = np.argsort(importances)[::-1]
+<<<<<<< HEAD:Sleep & Health Score Algo/SleepToBedRatioForest.py
 for index in sorted_indices:
     print(f"{features[index]}: {importances[index]}")
+=======
+
+class ForestResult:
+    def __init__(self, features, importances):
+        self.features = features
+        self.importances = importances
+        
+    def display_importances(self):
+        for index in sorted_indices:
+            print(f"{self.features[index]}: {self.importances[index]}")
+
+    @classmethod
+    def get_results(cls):
+        return [features, importances]
+
+
+result = ForestResult(features, importances)
+result.display_importances()
+>>>>>>> d6c3d59fd01582e5110797d9812941ab3f8bbc04:forest.py

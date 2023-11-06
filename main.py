@@ -6,7 +6,7 @@ import time
 
 from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
 from forms import signupForm
-#from piechart import pie_html
+from piechart import PieHtml
 from flask_mail import Mail, Message #use pip install Flask-Mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from flask_session import Session # pip install flask_session
@@ -34,10 +34,14 @@ s = URLSafeTimedSerializer('439D699B2F1C8BCAD6616AC339CA4')
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-
+pie_html_instance = PieHtml()
 
 # Load user data from the JSON file.
+<<<<<<< HEAD
 with open('JSON Data/users.json', 'r') as file:
+=======
+with open('users.json', 'r') as file:
+>>>>>>> d6c3d59fd01582e5110797d9812941ab3f8bbc04
 
     users = json.load(file)
 
@@ -196,7 +200,11 @@ def login():
 def homepage():
     # Check if the user is logged in (session or cookie).
     if 'username' in session:
-        return render_template('homepage.html', username=session['username'])
+
+        fig_html = pie_html_instance.get_fig_html()
+        scores = pie_html_instance.get_scores_to_display()
+
+        return render_template('homepage.html', username=session['username'], fig_html=fig_html, scores=scores)
     else:
         # Redirect to the login page or display a message.
         return redirect(url_for('index'))
@@ -242,12 +250,6 @@ def signup():
         return redirect(url_for('index'))
 
     return render_template('signup.html',title='Sign Up',form=form)
-
-
-    
-
-
-
 
 
 # Password hashing function (you should use a secure library for this).
