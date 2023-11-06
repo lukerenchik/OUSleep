@@ -59,11 +59,7 @@ def calculate_score(user_value, ideal_value, weight, std_dev):
 
 # Load data from JSON, calculate standard deviations, and the rest remains the same...
 # Load data from JSON
-<<<<<<< HEAD:Sleep & Health Score Algo/sleepScore.py
 with open("JSON Data/updated_data.json", "r") as file:
-=======
-with open("updated_data.json", "r") as file:
->>>>>>> d6c3d59fd01582e5110797d9812941ab3f8bbc04:sleepScore.py
     data = json.load(file)
 
 # Calculate standard deviations for each parameter
@@ -91,20 +87,6 @@ for user_id, user_data in data.items():
                 user_value = daily_data[key]
                 ideal_value = ideal_values[key]
                 std_dev = std_devs[key]
-<<<<<<< HEAD:Sleep & Health Score Algo/sleepScore.py
-                total_score += calculate_score(user_value, ideal_value, weight, std_dev)
-                # Check for lingering penalty from the previous day
-                if user_id in prev_day_extreme_penalty_users:
-                    total_score -= 2 * weights['TotalMinutesAsleep']
-                    prev_day_extreme_penalty_users.remove(user_id)
-                # Check if the user gets extreme penalty for the current day
-                if key == 'TotalMinutesAsleep' and user_value < 180:
-                    prev_day_extreme_penalty_users.add(user_id)
-        health_scores[user_id][date] = min(total_score, 1)
-
-# Save sleep_scores to a new JSON file
-with open("JSON Data/sleep_scores.json", "w") as file:
-=======
                 score = calculate_score(key, user_value, ideal_value, weight, std_dev)
                 total_score += score
                 score_composition[key] = score
@@ -116,6 +98,5 @@ def get_score_data():
     return total_score, score_composition
 
 # Save sleep_scores to a new JSON file
-with open("sleep_scores.json", "w") as file:
->>>>>>> d6c3d59fd01582e5110797d9812941ab3f8bbc04:sleepScore.py
+with open("JSON DATA/sleep_scores.json", "w") as file:
     json.dump(health_scores, file, indent=4)

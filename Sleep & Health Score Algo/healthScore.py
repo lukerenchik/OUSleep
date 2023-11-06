@@ -53,11 +53,7 @@ def calculate_score(key, value, ideal_value, weight, std_dev):
     return max(0, min(weight, score))
 
 # Load data from JSON
-<<<<<<< HEAD:Sleep & Health Score Algo/healthScore.py
 with open("JSON Data/updated_data.json", "r") as file:
-=======
-with open("updated_data.json", "r") as file:
->>>>>>> d6c3d59fd01582e5110797d9812941ab3f8bbc04:healthScore.py
     data = json.load(file)
 
 # Calculate standard deviations for each parameter
@@ -96,9 +92,5 @@ def get_score_data():
     return total_score, score_composition
 
 # Save health_scores to a new JSON file
-<<<<<<< HEAD:Sleep & Health Score Algo/healthScore.py
 with open("/JSON Data/health_scores.json", "w") as file:
-=======
-with open("health_scores.json", "w") as file:
->>>>>>> d6c3d59fd01582e5110797d9812941ab3f8bbc04:healthScore.py
     json.dump(health_scores, file, indent=4)

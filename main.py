@@ -37,11 +37,7 @@ Session(app)
 pie_html_instance = PieHtml()
 
 # Load user data from the JSON file.
-<<<<<<< HEAD
 with open('JSON Data/users.json', 'r') as file:
-=======
-with open('users.json', 'r') as file:
->>>>>>> d6c3d59fd01582e5110797d9812941ab3f8bbc04
 
     users = json.load(file)
 
