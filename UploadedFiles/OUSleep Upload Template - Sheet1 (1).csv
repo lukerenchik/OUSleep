@@ -1,0 +1,2 @@
+Date,TotalSteps,TotalDistance,VeryActiveDistance,ModeratelyActiveDistance,LightActiveDistance,SedentaryActiveDistance,VeryActiveMinutes,FairlyActiveMinutes,LightlyActiveMinutes,SedentaryMinutes,RestingHeartRate,TotalMinutesAsleep,TotalTimeInbed,SleepToBedRatio
+09/25/2023,18000,12.25,4,4,4.25,0,60,75,250,556,49,450,475,0.947

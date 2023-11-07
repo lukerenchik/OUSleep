@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./Sleep & Health Score Algo"
+    ]
+}

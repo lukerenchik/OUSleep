@@ -9,6 +9,16 @@
 <body>
 
 
+    <!-- Button to download the OUSleep Upload Template -->
+    <a href="/download-template" download>
+        <button>Download OUSleep Upload Template</button>
+    </a>
+
+    <!-- Form to upload a file -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".xlsx, .csv">
+        <button type="submit">Upload File</button>
+    </form>
 
 
     <div class="basecontainer">

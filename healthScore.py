@@ -16,17 +16,18 @@ weights = {
 ideal_values = {
     'SedentaryMinutes': 300,
     'LightlyActiveMinutes': 180,
-    'LightActiveDistance': 3, # in km
+    'LightActiveDistance': 3,  # in km
     'RestingHeartRate': 70,  # in beats per minute
     'TotalSteps': 10000,
-    'TotalDistance': 7, # in km
-    'ModeratelyActiveDistance': 2, # in km
+    'TotalDistance': 7,  # in km
+    'ModeratelyActiveDistance': 2,  # in km
     'FairlyActiveMinutes': 30,
-    'VeryActiveDistance': 1, # in km
+    'VeryActiveDistance': 1,  # in km
     'VeryActiveMinutes': 20
 }
 
 positive_parameters = ["LightlyActiveMinutes", "TotalSteps", "FairlyActiveMinutes", "VeryActiveMinutes"]
+
 
 def calculate_score(key, value, ideal_value, weight, std_dev):
     deviation = (value - ideal_value) / ideal_value
@@ -48,9 +49,10 @@ def calculate_score(key, value, ideal_value, weight, std_dev):
 
     # Calculate score based on squared deviation
     score = weight * (1 - squared_deviation)
-    
+
     # Ensure score stays between 0 and weight
     return max(0, min(weight, score))
+
 
 # Load data from JSON
 with open("JSON Data/updated_data.json", "r") as file:
@@ -59,7 +61,8 @@ with open("JSON Data/updated_data.json", "r") as file:
 # Calculate standard deviations for each parameter
 std_devs = {}
 for key in ideal_values:
-    all_values = [daily_data[key] for user_data in data.values() for daily_data in user_data.values() if key in daily_data]
+    all_values = [daily_data[key] for user_data in data.values() for daily_data in user_data.values() if
+                  key in daily_data]
     if not all_values:  # If all_values list is empty
         std_devs[key] = 0
         continue
@@ -84,13 +87,15 @@ for user_id, user_data in data.items():
                 score = calculate_score(key, user_value, ideal_value, weight, std_dev)
                 total_score += score
                 score_composition[key] = score
-        
+
         total_score = min(total_score, 1)  # Cap the total score to a maximum of 1
         health_scores[user_id][date] = total_score
+
 
 def get_score_data():
     return total_score, score_composition
 
+
 # Save health_scores to a new JSON file
-with open("/JSON Data/health_scores.json", "w") as file:
+with open("JSON Data/health_scores.json", "w") as file:
     json.dump(health_scores, file, indent=4)

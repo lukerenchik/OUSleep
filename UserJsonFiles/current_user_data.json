@@ -1,0 +1,18 @@
+{
+    "09/25/2023": {
+        "TotalSteps": "18000",
+        "TotalDistance": "12.25",
+        "VeryActiveDistance": "4",
+        "ModeratelyActiveDistance": "4",
+        "LightActiveDistance": "4.25",
+        "SedentaryActiveDistance": "0",
+        "VeryActiveMinutes": "60",
+        "FairlyActiveMinutes": "75",
+        "LightlyActiveMinutes": "250",
+        "SedentaryMinutes": "556",
+        "RestingHeartRate": "49",
+        "TotalMinutesAsleep": "450",
+        "TotalTimeInbed": "475",
+        "SleepToBedRatio": "0.947"
+    }
+}
