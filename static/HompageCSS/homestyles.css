@@ -1,10 +1,8 @@
 /* styles.css */
 p {
-    font-family: "Arial";
-    text-align: center;
-   
-    
+    color: rgb(31, 86, 105);
 }
+
 
 body {
     background-image: url('Used_Images/bimg3.png');
@@ -12,6 +10,8 @@ body {
     background-repeat: no-repeat; /* Prevents the image from repeating */
     background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
     background-position: center center;
+    font-family: "Arial";
+    text-align: center;
     
 }
 
@@ -23,17 +23,22 @@ body {
     padding-right: 20px;
     padding-bottom: 20px;
     box-sizing: border-box; /* Includes padding in the width */
-    color: #fff;
+    
     border-radius: 8px 1px 1px 8px;
 }
 
 .OrganizationHeader {
+    color: #fff;
     font-size: 20px;
     padding: -2px;
     margin-top: 8px;
     font-family: "Bauhaus 93";
-    margin-left: 10px;
+    margin-left: 8px;
     text-align: left;
+    border-bottom: ridge white ;
+    margin-right: 26px;
+    border-width: 10px;
+    border-radius: 5px;
     
     }
 
@@ -44,8 +49,8 @@ body {
       
     }
 
-    .Dashboard-Link {
-
+    .Dashboard-Link, .Statistics-Link {
+        border-bottom: solid beige;
         color: #cbcaca;
     }
 
@@ -55,19 +60,27 @@ body {
         color: #cbcaca;
     }
 
+    
 
 
-.WelcomeUser {
-    text-align: left;
-    margin-right: 10px;
+
+.Welcome_User_Text {
+    font-weight: bold;
+    font-family: "Aharoni";
+    font-size: 25px;
+    color: rgb(31, 86, 105);
+    padding-bottom: 3px;
 }
 
 
 
-.WelcomeUser {
-    height: 40px;
-}
 
+.WelcomeUser_Container {
+   width: 550px;
+    padding: 20px;
+    
+    
+}
 
 .error-label {
     color: red;     /* Set text color to red */

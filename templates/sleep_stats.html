@@ -18,16 +18,16 @@
 
         <div class="Tab-Layout">
         
-            <p class=OrganizationHeader> OUSleep</p>
+            <p class=OrganizationHeader> OUSleep
+            </p>
             
             <p class="Dashboard"> 
-                <a href="http://127.0.0.1:5000/homepage" class="Dashboard-Link"> Dashboard </a> </p>
+                <a href="http://127.0.0.1:5000/homepage" class="Dashboard-Link"> Dashboard </a>
 
-            <p class="Statistics"> <a href="{{ url_for('sleep_stats') }}" class="Statistics-Link">  Statistics </p> 
+                
+        </p>
 
-            
-
-        
+        <p class="Statistics"> <a href="{{ url_for('sleep_stats') }}" class="Statistics-Link">  Statistics </p> 
 
 
 
@@ -35,26 +35,28 @@
 
 
 
-        <div class="WelcomeUser_Container">
 
-                <div class="Welcome_User_Text">
-                <!-- Display the username at the top -->
-                <p>Welcome, {{ username }}</p>
 
-                </div>
+        <div class="WelcomeUser">
+        <!-- Display the username at the top -->
+        <p>Sleep Statistics for {{ username }}</p>
+
+        </div>
 
         <!-- Calendar widget -->
-                <div id="calendar"></div>
+        <div id="calendar"></div>
 
         <!-- Circle widget for sleep score -->
-                <div class="circle-widget">
-                    <div class="circle">
-                        {{ sleep_score }}
-                    </div>
-                    <p>Sleep Score</p>
-                </div>
-    
+        <div class="circle-widget">
+            <div class="circle">
+                {{ sleep_score }}
             </div>
+            <p>Sleep Score</p>
+        </div>
+
+
+
+    </div>
 
     <!-- Include JavaScript libraries as needed -->
     <!-- For example, include FullCalendar library here -->
@@ -105,4 +107,3 @@
     </script>
 </body>
 </html>
-

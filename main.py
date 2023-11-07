@@ -244,9 +244,11 @@ def signup():
     return render_template('signup.html',title='Sign Up',form=form)
 
 
-    
+@app.route('/sleep_stats')
+def sleep_stats():
+        
 
-
+    return render_template('sleep_stats.html', username=session['username'])
 
 
 
