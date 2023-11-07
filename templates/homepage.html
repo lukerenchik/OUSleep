@@ -3,58 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
-    <link rel="stylesheet" type="text/css" href="static\HompageCSS\homestyles.css">
-    
+    <link rel="stylesheet" type="text/css" href="static\HomepageCSS\homestyles.css">
     <!-- ... (your existing styles) -->
-    
-
 </head>
 <body>
 
-  
+
+    <!-- Button to download the OUSleep Upload Template -->
+    <a href="/download-template" download>
+        <button>Download OUSleep Upload Template</button>
+    </a>
+
+    <!-- Form to upload a file -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".xlsx, .csv">
+        <button type="submit">Upload File</button>
+    </form>
 
 
     <div class="basecontainer">
 
-        <div class="Tab-Layout">
-        
-            <p class=OrganizationHeader> OUSleep</p>
-            
-            <p class="Dashboard"> 
-                <a href="http://127.0.0.1:5000/homepage" class="Dashboard-Link"> Dashboard </a> </p>
+         <div class="Tab-Layout">
 
-            <p class="Statistics"> <a href="{{ url_for('sleep_stats') }}" class="Statistics-Link">  Statistics </p> 
+            <p class=OrganizationHeader> OUSleep
+            </p>
 
-            
-
-        
+            <p class="Dashboard">
+                <a href="http://127.0.0.1:5000/homepage" class="Dashboard-Link"> Dashboard </a>
 
 
+        </p>
 
+        <!-- Display the username at the top -->
+        <div class="WelcomeUser">
+            <p>Hello {{ username }}</p>
         </div>
 
-
-
-        <div class="WelcomeUser_Container">
-
-                <div class="Welcome_User_Text">
-                <!-- Display the username at the top -->
-                <p>Welcome, {{ username }}</p>
-
-                </div>
-
         <!-- Calendar widget -->
-                <div id="calendar"></div>
+        <div id="calendar"></div>
 
         <!-- Circle widget for sleep score -->
-                <div class="circle-widget">
-                    <div class="circle">
-                        {{ sleep_score }}
-                    </div>
-                    <p>Sleep Score</p>
+        <div class="Statistics">
+            <p>Statistics</p>
+            <div class="circle-widget">
+                <div class="circle-widget-child">
+                    <div class="circle-comp"><iframe srcdoc="{{ fig_html[0] }}" frameborder="0" width="100%" height="100%"></iframe></div>
                 </div>
-    
+                <div class="circle-widget-child">
+                    <p class="score-label">Sleep Score</p>
+                    <div class="circle-score">{{ scores[0] }}</div>
+                </div>
             </div>
+            <div class="circle-widget">
+                <div class="circle-widget-child">
+                    <div class="circle-comp"><iframe srcdoc="{{ fig_html[1] }}" frameborder="0" width="100%" height="100%"></iframe></div>
+                </div>
+                <div class="circle-widget-child">
+                    <p class="score-label">Health Score</p>
+                    <div class="circle-score">{{ scores[1] }}</div>
+                </div>
+            </div>
+         </div>
+    </p>
 
     <!-- Include JavaScript libraries as needed -->
     <!-- For example, include FullCalendar library here -->

@@ -3,10 +3,12 @@ import json
 import secrets
 import hashlib
 import time
-
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+import os
+import pandas as pd
+import chardet
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, send_from_directory, send_file
 from forms import signupForm
-#from piechart import pie_html
+from piechart import PieHtml
 from flask_mail import Mail, Message #use pip install Flask-Mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from flask_session import Session # pip install flask_session
@@ -34,10 +36,10 @@ s = URLSafeTimedSerializer('439D699B2F1C8BCAD6616AC339CA4')
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-
+pie_html_instance = PieHtml()
 
 # Load user data from the JSON file.
-with open('C:\\Users\\chris\\OneDrive\\Desktop\\VS SleepStudy Project\\OUSleep\\users.json', 'r') as file:
+with open('JSON Data/users.json', 'r') as file:
 
     users = json.load(file)
 
@@ -45,6 +47,97 @@ with open('C:\\Users\\chris\\OneDrive\\Desktop\\VS SleepStudy Project\\OUSleep\\
 @app.route('/')
 def index():
     return render_template('preloginhome.html')
+
+# TODO Implement Upload & Download Button in CSS
+# Route to download the OUSleep Upload Template
+@app.route('/download-template')
+def download_template():
+    try:
+        # Make sure the path to the file is correct and the file exists
+        path_to_file = os.path.join(app.root_path, 'JSON Data/OUSleep Upload Template.xlsx')
+        return send_file(path_to_file, as_attachment=True)
+    except Exception as e:
+        app.logger.error(f"An error occurred: {e}")
+        return "An error occurred while trying to download the file.", 500
+# Route to upload a file and process it
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    # Check if the post request has the file part
+    if 'file' not in request.files:
+        return 'No file part', 400
+    file = request.files['file']
+    
+    # If the user does not select a file, the browser submits an empty file without a filename.
+    if file.filename == '':
+        return 'No selected file', 400
+    
+    if file and allowed_file(file.filename):
+        # Assuming the username is obtained from a session or a database
+        username = 'current_user'  # Replace with actual method to get the current user's username
+        
+        # Save the uploaded file
+        filepath = os.path.join('UploadedFiles', file.filename)  # Set the path to save the file
+        file.save(filepath)
+
+        # Process the saved file
+        processed_data = process_uploaded_file(filepath)
+              # Path to the user's data file
+        user_data_file = os.path.join('UserJsonFiles', f'{username}_data.json')
+        
+        # Read the existing data if the file exists, otherwise create an empty dictionary
+        if os.path.exists(user_data_file):
+            with open(user_data_file, 'r') as file:
+                user_data = json.load(file)
+        else:
+            user_data = {}
+
+        # Update the user's data with the new data
+        user_data.update(processed_data)
+        
+        # Write the updated data back to the file
+        with open(user_data_file, 'w') as file:
+            json.dump(user_data, file, indent=4)
+        
+        # Return success response
+
+        # TODO: Need to send a success message to homepage.html that alerts user the data was uploaded, and update pygraphs, instead of redirecting to a json.
+        return jsonify(success=True, message=f"Data for {username} updated successfully.")
+   
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in {'xlsx', 'csv'}
+
+def process_uploaded_file(filepath):
+    # Guess the encoding of the file
+    with open(filepath, 'rb') as f:
+        result = chardet.detect(f.read())  # or read a smaller amount of data if the file is very large
+    encoding = result['encoding']
+
+    # Read the CSV file with the detected encoding
+    df = pd.read_csv(filepath, encoding=encoding, header=None)
+    
+    # Use the first row as the header
+    header = df.iloc[0]
+    df = df[1:]  # Take the data less the header row
+    df.columns = header  # Set the header row as the df header
+    
+    # Extract the first row as values
+    values = df.iloc[0].to_dict()
+    
+    # Use the 'Date' column as a higher-level key
+    date_key = values['Date']
+    
+    # Remove the 'Date' entry from values
+    values.pop('Date', None)
+    
+    # Return the processed data
+    return {date_key: values}
+
+
+
+
+
 
 
 @app.route('/ForgotPW')
@@ -196,7 +289,11 @@ def login():
 def homepage():
     # Check if the user is logged in (session or cookie).
     if 'username' in session:
-        return render_template('homepage.html', username=session['username'])
+
+        fig_html = pie_html_instance.get_fig_html()
+        scores = pie_html_instance.get_scores_to_display()
+
+        return render_template('homepage.html', username=session['username'], fig_html=fig_html, scores=scores)
     else:
         # Redirect to the login page or display a message.
         return redirect(url_for('index'))

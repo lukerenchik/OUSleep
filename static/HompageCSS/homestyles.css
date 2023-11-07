@@ -23,7 +23,7 @@ body {
     padding-right: 20px;
     padding-bottom: 20px;
     box-sizing: border-box; /* Includes padding in the width */
-    
+    color: #fff;
     border-radius: 8px 1px 1px 8px;
 }
 
