@@ -1,6 +1,6 @@
 
 import json
-from math import sqrt
+from math import sqrt, exp
 
 weights = {
     'SedentaryMinutes': 0.24295697216178969,
@@ -69,7 +69,7 @@ def calculate_health_scores(data):
     # Calculate health scores for each user and date
     health_scores = {}
     for user_id, user_data in data.items():
-        user_scores = {}
+        health_scores[user_id] = {}
         for date, daily_data in user_data.items():
             total_score = 0
             for key, weight in weights.items():
@@ -81,8 +81,7 @@ def calculate_health_scores(data):
                     total_score += score
 
             total_score = min(total_score, 1)  # Cap the total score to a maximum of 1
-            user_scores[date] = total_score
-        health_scores[user_id] = user_scores
+            health_scores[user_id][date] = total_score
     return health_scores
 
 def get_health_scores_from_file(file_path):

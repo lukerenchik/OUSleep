@@ -1,6 +1,5 @@
-
 import json
-from math import sqrt
+from math import sqrt, exp
 
 weights = {
     'SedentaryMinutes': 0.24295697216178969,
@@ -29,6 +28,7 @@ ideal_values = {
 
 positive_parameters = ["LightlyActiveMinutes", "TotalSteps", "FairlyActiveMinutes", "VeryActiveMinutes"]
 
+
 def calculate_score(key, value, ideal_value, weight, std_dev):
     deviation = (value - ideal_value) / ideal_value
 
@@ -53,44 +53,49 @@ def calculate_score(key, value, ideal_value, weight, std_dev):
     # Ensure score stays between 0 and weight
     return max(0, min(weight, score))
 
-def calculate_health_scores(data):
-    # Calculate standard deviations for each parameter
-    std_devs = {}
-    for key in ideal_values:
-        all_values = [daily_data[key] for user_data in data.values() for daily_data in user_data.values() if
-                      key in daily_data]
-        if not all_values:  # If all_values list is empty
-            std_devs[key] = 0
-            continue
-        mean = sum(all_values) / len(all_values)
-        variance = sum((x - mean) ** 2 for x in all_values) / len(all_values)
-        std_devs[key] = sqrt(variance)
 
-    # Calculate health scores for each user and date
-    health_scores = {}
-    for user_id, user_data in data.items():
-        user_scores = {}
-        for date, daily_data in user_data.items():
-            total_score = 0
-            for key, weight in weights.items():
-                if key in daily_data:
-                    user_value = daily_data[key]
-                    ideal_value = ideal_values[key]
-                    std_dev = std_devs[key]
-                    score = calculate_score(key, user_value, ideal_value, weight, std_dev)
-                    total_score += score
+# Load data from JSON
+with open("JSON Data/updated_data.json", "r") as file:
+    data = json.load(file)
 
-            total_score = min(total_score, 1)  # Cap the total score to a maximum of 1
-            user_scores[date] = total_score
-        health_scores[user_id] = user_scores
-    return health_scores
+# Calculate standard deviations for each parameter
+std_devs = {}
+for key in ideal_values:
+    all_values = [daily_data[key] for user_data in data.values() for daily_data in user_data.values() if
+                  key in daily_data]
+    if not all_values:  # If all_values list is empty
+        std_devs[key] = 0
+        continue
+    mean = sum(all_values) / len(all_values)
+    variance = sum((x - mean) ** 2 for x in all_values) / len(all_values)
+    std_devs[key] = sqrt(variance)
 
-def get_health_scores_from_file(file_path):
-    with open(file_path, "r") as file:
-        data = json.load(file)
-    return calculate_health_scores(data)
+# Calculate health scores for each user and date
+health_scores = {}
+# Calculate health scores for each user and date
+health_scores = {}
+for user_id, user_data in data.items():
+    health_scores[user_id] = {}
+    for date, daily_data in user_data.items():
+        total_score = 0
+        score_composition = {}
+        for key, weight in weights.items():
+            if key in daily_data:
+                user_value = daily_data[key]
+                ideal_value = ideal_values[key]
+                std_dev = std_devs[key]
+                score = calculate_score(key, user_value, ideal_value, weight, std_dev)
+                total_score += score
+                score_composition[key] = score
 
-# Example usage
-if __name__ == "__main__":
-    health_scores = get_health_scores_from_file("UserJsonFiles/current_user_data.json")
-    print(health_scores)
+        total_score = min(total_score, 1)  # Cap the total score to a maximum of 1
+        health_scores[user_id][date] = total_score
+
+
+def get_score_data():
+    return total_score, score_composition
+
+
+# Save health_scores to a new JSON file
+with open("JSON Data/health_scores.json", "w") as file:
+    json.dump(health_scores, file, indent=4)
