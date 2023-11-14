@@ -326,6 +326,11 @@ def signup():
 
     return render_template('signup.html', title='Sign Up', form=form)
 
+@app.route('/sleep_stats')
+def sleep_stats():
+    fig_html = pie_html_instance.get_fig_html()
+    scores = pie_html_instance.get_scores_to_display()
+    return render_template('sleep_stats.html', username=session['username'], fig_html = fig_html, scores_html = scores)
 
 # Password hashing function (you should use a secure library for this).
 def check_password(password, hashed_password):
