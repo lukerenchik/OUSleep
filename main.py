@@ -88,6 +88,7 @@ def upload_file():
 
         # Process the saved file
         processed_data = process_uploaded_file(filepath)
+        processed_data = {username: processed_data}
         # Path to the user's data file
         user_data_file = os.path.join('UserJsonFiles', f'{username}_data.json')
 
