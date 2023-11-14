@@ -6,17 +6,15 @@ import time
 import os
 import pandas as pd
 import chardet
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, send_from_directory, send_file
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, send_from_directory, \
+    send_file
 from forms import signupForm
 from piechart import PieHtml
-from flask_mail import Mail, Message #use pip install Flask-Mail
+from flask_mail import Mail, Message  # use pip install Flask-Mail
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-from flask_session import Session # pip install flask_session
-
-
+from flask_session import Session  # pip install flask_session
 
 app = Flask(__name__, template_folder="templates", static_folder="static")
-
 
 app.config['SECRET_KEY'] = "439D699B2F1C8BCAD6616AC339CA4"
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -26,7 +24,6 @@ app.config['MAIL_USE_SSL'] = False
 app.config['MAIL_USERNAME'] = 'noreplyousleep@gmail.com'
 app.config['MAIL_PASSWORD'] = 'uznc yptb opfd bdaj'
 app.config['MAIL_DEFAULT_SENDER'] = 'noreplyousleep@gmail.com'
-
 
 mail = Mail(app)
 app.secret_key = 'your_secret_key'  # Replace with a secure secret key.s
@@ -40,13 +37,13 @@ pie_html_instance = PieHtml()
 
 # Load user data from the JSON file.
 with open('JSON Data/users.json', 'r') as file:
-
     users = json.load(file)
 
 
 @app.route('/')
 def index():
     return render_template('preloginhome.html')
+
 
 # TODO Implement Upload & Download Button in CSS
 # Route to download the OUSleep Upload Template
@@ -58,22 +55,32 @@ def download_template():
         return send_file(path_to_file, as_attachment=True)
     except Exception as e:
         app.logger.error(f"An error occurred: {e}")
-        return "An error occurred while trying to download the file.", 500
+        flash("An Error occurred while trying to upload the file", "error")
+        return render_template('homepage.html', username=session['username'])
+
+
 # Route to upload a file and process it
-@app.route('/upload', methods=['POST'])
+@app.route('/upload-csv', methods=['POST'])
 def upload_file():
     # Check if the post request has the file part
     if 'file' not in request.files:
-        return 'No file part', 400
+        flash("Error: No file part", "error")
+        return render_template('homepage.html', username=session['username'])
     file = request.files['file']
-    
+
     # If the user does not select a file, the browser submits an empty file without a filename.
     if file.filename == '':
-        return 'No selected file', 400
-    
+        flash("File is not selected, please select a file", "error")
+        return render_template('homepage.html', username=session['username'])
+
     if file and allowed_file(file.filename):
         # Assuming the username is obtained from a session or a database
-        username = 'current_user'  # Replace with actual method to get the current user's username
+        username = session['username'] 
+
+        if not file.filename.endswith('.csv'):
+
+            flash("Invalid file type. Please upload a CSV file", "error")
+            return render_template('homepage.html', username=session['username'])
         
         # Save the uploaded file
         filepath = os.path.join('UploadedFiles', file.filename)  # Set the path to save the file
@@ -81,9 +88,9 @@ def upload_file():
 
         # Process the saved file
         processed_data = process_uploaded_file(filepath)
-              # Path to the user's data file
+        # Path to the user's data file
         user_data_file = os.path.join('UserJsonFiles', f'{username}_data.json')
-        
+
         # Read the existing data if the file exists, otherwise create an empty dictionary
         if os.path.exists(user_data_file):
             with open(user_data_file, 'r') as file:
@@ -93,20 +100,21 @@ def upload_file():
 
         # Update the user's data with the new data
         user_data.update(processed_data)
-        
+
         # Write the updated data back to the file
         with open(user_data_file, 'w') as file:
             json.dump(user_data, file, indent=4)
-        
+
         # Return success response
 
-        # TODO: Need to send a success message to homepage.html that alerts user the data was uploaded, and update pygraphs, instead of redirecting to a json.
-        return jsonify(success=True, message=f"Data for {username} updated successfully.")
-   
+        flash(f"Data for { username } updated successfully.", "success")
+        return render_template('homepage.html', username=session['username'])
+
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in {'xlsx', 'csv'}
+        filename.rsplit('.', 1)[1].lower() in {'xlsx', 'csv'}
+
 
 def process_uploaded_file(filepath):
     # Guess the encoding of the file
@@ -116,105 +124,89 @@ def process_uploaded_file(filepath):
 
     # Read the CSV file with the detected encoding
     df = pd.read_csv(filepath, encoding=encoding, header=None)
-    
+
     # Use the first row as the header
     header = df.iloc[0]
     df = df[1:]  # Take the data less the header row
     df.columns = header  # Set the header row as the df header
-    
+
     # Extract the first row as values
     values = df.iloc[0].to_dict()
-    
+
     # Use the 'Date' column as a higher-level key
     date_key = values['Date']
-    
+
     # Remove the 'Date' entry from values
     values.pop('Date', None)
-    
+
     # Return the processed data
     return {date_key: values}
 
 
-
-
-
-
-
 @app.route('/ForgotPW')
 def ForgotPW():
-
     return render_template('ForgotPW.html')
-        
-    
+
 
 @app.route('/Reset_Password', methods=['GET', 'POST'])
 def Reset_Password():
-    
-    input_email = request.form.get('email') 
-    
-    email_exists = any(user.get('email') == input_email for user in users.values()) # input checks to see if email is apart of .json file
-        
-    if email_exists: #if email is registered to a user, goes to Reset Password page
-        
+    input_email = request.form.get('email')
+
+    email_exists = any(user.get('email') == input_email for user in
+                       users.values())  # input checks to see if email is apart of .json file
+
+    if email_exists:  # if email is registered to a user, goes to Reset Password page
+
         session['email'] = input_email
-        
+
         token = s.dumps(input_email, salt='reset-password')
-        
+
         link_to_route = url_for('PWAccess', token=token, _external=True)
-        
+
         msg_title = "Reset Your OU Sleep Account Password"
-        
-        msg_body = f"Please click <a href='{link_to_route}'>here</a> to go to reset your password. " # The email details
-        
-        
-        
+
+        msg_body = f"Please click <a href='{link_to_route}'>here</a> to go to reset your password. "  # The email details
 
         msg = Message(msg_title, html=msg_body, recipients=[input_email])
-        
-        
+
         try:
             mail.send(msg)
             flash("Reset Request Email Has been sent! Please check your email!", "success")
             return redirect(url_for('ForgotPW'))
-    
+
         except Exception as e:
-            flash("There was a problem in sending the Reset Password link, Please try again", "error")    
+            flash("There was a problem in sending the Reset Password link, Please try again", "error")
         return redirect(url_for('ForgotPW'))
-        
-    
-     
-    
+
+
+
+
     else:
-        flash("The Email Address Entered is not regeistered with a user, please try again", "error")    
+        flash("The Email Address Entered is not regeistered with a user, please try again", "error")
         return redirect(url_for('ForgotPW'))
-        
-    
-    
-   
-    
-@app.route('/PWAccess/<token>') 
+
+
+@app.route('/PWAccess/<token>')
 def PWAccess(token):
     try:
-        
-        input_email = s.loads(token, salt='reset-password', max_age=3600) # 3600 sec. till token expires for link to Reset_Access
-        
-        
+
+        input_email = s.loads(token, salt='reset-password',
+                              max_age=3600)  # 3600 sec. till token expires for link to Reset_Access
+
+
     except SignatureExpired:
-        flash("It appears your token has expired, please reinput your email", "error")    
+        flash("It appears your token has expired, please reinput your email", "error")
         return redirect(url_for('ForgotPW'))
     return redirect(url_for('Reset_Access'))
 
 
 @app.route('/Reset_Access')
 def Reset_Access():
-
     return render_template('Reset_Access.html')
-
 
 
 @app.route('/ResetPW', methods=['GET', 'POST'])
 def ResetPW():
-    
     input_email = session.get('email')
 
     if request.method == 'POST':
@@ -223,11 +215,11 @@ def ResetPW():
         special_chars = '!@#$%^&*()'
 
         if new_password == confirm_password:
-            if len(new_password) < 6:  #checks if password is more than 6 characters
-                flash("Password must be at least 5 characters", "error") 
+            if len(new_password) < 6:  # checks if password is more than 6 characters
+                flash("Password must be at least 5 characters", "error")
                 return redirect(url_for('Reset_Access'))
 
-            if not any(char in special_chars for char in new_password): #checks if password has a special character
+            if not any(char in special_chars for char in new_password):  # checks if password has a special character
                 flash("Password must have a special character", "error")
                 return redirect(url_for('Reset_Access'))
 
@@ -257,11 +249,6 @@ def ResetPW():
         else:
             flash("Passwords do not match, Please try again", "error")
             return redirect(url_for('Reset_Access'))
-   
-
- 
-
-    
 
 
 @app.route('/login', methods=['POST'])
@@ -315,15 +302,14 @@ def signup():
         if username in users:
             flash("Username already exists, please choose another one.", "error")
             return redirect(url_for('signup'))
-        
-        elif email in [user_data.get('email') for user_data in users.values()]: # Added so that there will be no duplicate emails in sign up
+
+        elif email in [user_data.get('email') for user_data in
+                       users.values()]:  # Added so that there will be no duplicate emails in sign up
             flash("Email already associated with an account, please use another email.", "error")
             return redirect(url_for('signup'))
 
         # Hash the password.
         password_hash = hashlib.sha256(password.encode()).hexdigest()
-        
-
 
         # Save user data to users.json.
         users[username] = {
@@ -338,12 +324,13 @@ def signup():
         print("Account created successfully. You can now log in.", "success")
         return redirect(url_for('index'))
 
-    return render_template('signup.html',title='Sign Up',form=form)
+    return render_template('signup.html', title='Sign Up', form=form)
 
 
 # Password hashing function (you should use a secure library for this).
 def check_password(password, hashed_password):
     return hashlib.sha256(password.encode()).hexdigest() == hashed_password
+
 
 def generate_reset_token():
     # Generate a random and secure token (32 bytes)
@@ -352,11 +339,8 @@ def generate_reset_token():
     timestamp = int(time.time()) + 3600  # 3600 seconds = 1 hour
     # Combine the token and timestamp
     reset_token = f"{token}.{timestamp}"
-    
+
     return reset_token
-
-
-    
 
 
 if __name__ == '__main__':

@@ -68,10 +68,13 @@ def calculate_health_scores(data):
 
     # Calculate health scores for each user and date
     health_scores = {}
+    health_compositions = {}
     for user_id, user_data in data.items():
         user_scores = {}
+        user_compositions = {}
         for date, daily_data in user_data.items():
             total_score = 0
+            score_composition = {}
             for key, weight in weights.items():
                 if key in daily_data:
                     user_value = daily_data[key]
@@ -79,11 +82,14 @@ def calculate_health_scores(data):
                     std_dev = std_devs[key]
                     score = calculate_score(key, user_value, ideal_value, weight, std_dev)
                     total_score += score
+                    score_composition[key] = score
 
             total_score = min(total_score, 1)  # Cap the total score to a maximum of 1
             user_scores[date] = total_score
+            user_compositions[date] = score_composition
         health_scores[user_id] = user_scores
-    return health_scores
+        health_compositions[user_id] = score_composition
+    return health_scores, health_compositions
 
 def get_health_scores_from_file(file_path):
     with open(file_path, "r") as file:

@@ -1,10 +1,5 @@
 /* styles.css */
-p {
-    font-family: "Arial";
-    text-align: center;
-   
-    
-}
+
 
 body {
     background-image: url('Used_Images/bimg3.png');
@@ -12,7 +7,28 @@ body {
     background-repeat: no-repeat; /* Prevents the image from repeating */
     background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
     background-position: center center;
+    font-family: "Arial";
+    text-align: center;
     
+}
+
+.success-messages, .error-messages {
+
+    text-align: center;
+    font-weight: bold;
+
+}
+
+.error-messages {
+    /* Red background for error messages */
+   color: #f40e0e; 
+ 
+}
+
+.success-messages {
+    /* Green background for success messages */
+   color: #25d253; ; 
+
 }
 
 .Tab-Layout {
@@ -28,12 +44,17 @@ body {
 }
 
 .OrganizationHeader {
+    color: #fff;
     font-size: 20px;
     padding: -2px;
     margin-top: 8px;
     font-family: "Bauhaus 93";
-    margin-left: 10px;
+    margin-left: 8px;
     text-align: left;
+    border-bottom: ridge white ;
+    margin-right: 26px;
+    border-width: 10px;
+    border-radius: 5px;
     
     }
 
@@ -44,8 +65,8 @@ body {
       
     }
 
-    .Dashboard-Link {
-
+    .Dashboard-Link, .Statistics-Link {
+        border-bottom: solid beige;
         color: #cbcaca;
     }
 
@@ -55,19 +76,30 @@ body {
         color: #cbcaca;
     }
 
+    
+.Sleep_Text {
+    padding-bottom: 25px;
+
+}
 
 
-.WelcomeUser {
-    text-align: left;
-    margin-right: 10px;
+.Welcome_User_Text {
+    font-weight: bold;
+    font-family: "Aharoni";
+    font-size: 25px;
+    color: rgb(51, 59, 111);
+    padding-bottom: -3px;
 }
 
 
 
-.WelcomeUser {
-    height: 40px;
-}
 
+.WelcomeUser_Container {
+   width: 620px;
+    padding: 15px;
+    
+    
+}
 
 .error-label {
     color: red;     /* Set text color to red */
@@ -87,8 +119,39 @@ body {
    
 }
 
+.Download_Container, .Upload_Container {
+
+    display:inline-block;
+}
+
+
+.Download_Container {
+
+    text-align: left;
+    margin-right: 200px;
+    width: 200px;
+}
+
+.Download_Button {
+    height: 30%;
+    width: 65%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.Download_Text {
+
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+
 button {
-    width: 20%;
+    width: 35%;
     padding: 10px;
     background-color: #007BFF;
     color: #fff;

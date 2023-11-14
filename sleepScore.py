@@ -99,7 +99,7 @@ def calculate_sleep_scores(data):
             # Cap the total score to a maximum of 1
             total_score = min(total_score, 1)
             sleep_scores[user_id][date] = total_score
-    return sleep_scores
+    return sleep_scores, score_composition
 
 
 def get_sleep_scores_from_file(file_path):
@@ -108,9 +108,10 @@ def get_sleep_scores_from_file(file_path):
     return calculate_sleep_scores(data)
 
 
+
 if __name__ == "__main__":
-    sleep_scores = get_sleep_scores_from_file("JSON Data/updated_data.json")
-    #print(sleep_scores)
+    sleep_scores = get_sleep_scores_from_file("UserJsonFiles/current_user_data.json")
+    print(sleep_scores)
 
 # Save sleep_scores to a new JSON file
 # with open("JSON DATA/sleep_scores.json", "w") as file:

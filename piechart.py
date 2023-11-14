@@ -1,13 +1,22 @@
 import sleepScore, healthScore
 import plotly.graph_objects as go
 
+
+
 #define variables
-total_sleep_score, sleep_score_composition = sleepScore.get_score_data()
+sleepScoreValue, sleepScoreComposition = sleepScore.get_sleep_scores_from_file("UserJsonFiles/current_user_data.json")
+healthScoreValue, healthScoreComposition = healthScore.get_health_scores_from_file("UserJsonFiles/current_user_data.json")
 
-sleep_score_keys = list(sleep_score_composition.keys())
-sleep_score_values = list(sleep_score_composition.values())
+inner_sleep_dict = next(iter(sleepScoreValue.values()))  # Assuming you're interested in the first key of the outer dictionary
+sleep_date_display, sleep_score_display = list(inner_sleep_dict.items())[-1]
+inner_health_dict = next(iter(healthScoreValue.values()))
+health_date_display, health_score_display = list(inner_health_dict.items())[-1]
+        
+sleep_score_display = int((round(sleep_score_display, 2))*100)
+health_score_display = int((round(health_score_display, 2))*100)
 
-total_health_score, health_score_composition = healthScore.get_score_data()
+sleep_score_keys = list(sleepScoreComposition.keys())
+sleep_score_values = list(sleepScoreComposition.values())
 
 
 def pie_html():
@@ -16,10 +25,12 @@ def pie_html():
 #class pie_html():
 	#return fig_html
 
-health_score_keys = list(health_score_composition.keys())
-health_score_values = list(health_score_composition.values())
+health_score_keys = list(healthScoreComposition.keys())
+health_score_values = list(healthScoreComposition.values())
 
-all_scores = [total_sleep_score, total_health_score]
+all_scores = [sleep_score_display, health_score_display]
+
+#print(all_scores)
 
 # create Pie Charts
 sleep_fig = go.Figure(data=[go.Pie(labels=sleep_score_keys, values=sleep_score_values)])

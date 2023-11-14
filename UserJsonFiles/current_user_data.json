@@ -1,18 +1,51 @@
 {
     "718OS3": {
-        "11/02/2018": {
-            "TotalSteps": 13489,
-            "TotalDistance": 10.7600002288818,
-            "VeryActiveDistance": 1.6599999666214,
-            "ModeratelyActiveDistance": 1.78999996185303,
-            "LightActiveDistance": 7.32000017166138,
+        "09/28/2018": {
+            "TotalSteps": 10157,
+            "TotalDistance": 8.32999992370605,
+            "VeryActiveDistance": 4.6399998664856,
+            "ModeratelyActiveDistance": 0.189999997615814,
+            "LightActiveDistance": 3.49000000953674,
             "SedentaryActiveDistance": 0.0,
-            "VeryActiveMinutes": 8,
-            "FairlyActiveMinutes": 60,
-            "LightlyActiveMinutes": 297,
-            "SedentaryMinutes": 638,
-            "RestingHeartRate": 49.0,
-            "TotalMinutesAsleep": 368,
-            "TotalTimeInBed": 429,
-            "SleepToBedRatio": 0.8578088578088578
-    }}}
+            "VeryActiveMnutes": 46,
+            "FairlyActiveMinutes": 5,
+            "LightlyActiveMinutes": 149,
+            "SedentaryMinutes": 801,
+            "RestingHeartRate": 48.0,
+            "TotalMinutesAsleep": 538,
+            "TotalTimeInBed": 582,
+            "SleepToBedRatio": 0.9243986254295533
+        },
+        "09/29/2018": {
+            "TotalSteps": 13671,
+            "TotalDistance": 10.7700004577637,
+            "VeryActiveDistance": 3.3199999332428,
+            "ModeratelyActiveDistance": 0.629999995231628,
+            "LightActiveDistance": 6.80999994277954,
+            "SedentaryActiveDistance": 0.0,
+            "VeryActiveMinutes": 52,
+            "FairlyActiveMinutes": 21,
+            "LightlyActiveMinutes": 310,
+            "SedentaryMinutes": 561,
+            "RestingHeartRate": 47.0,
+            "TotalMinutesAsleep": 437,
+            "TotalTimeInBed": 496,
+            "SleepToBedRatio": 0.8810483870967742
+        },
+        "09/30/2018": {
+            "TotalSteps": 6774,
+            "TotalDistance": 5.07000017166138,
+            "VeryActiveDistance": 0.550000011920929,
+            "ModeratelyActiveDistance": 0.209999993443489,
+            "LightActiveDistance": 4.28999996185303,
+            "SedentaryActiveDistance": 0.0,
+            "VeryActiveMinutes": 10,
+            "FairlyActiveMinutes": 66,
+            "LightlyActiveMinutes": 224,
+            "SedentaryMinutes": 646,
+            "RestingHeartRate": 45.0,
+            "TotalMinutesAsleep": 429,
+            "TotalTimeInBed": 494,
+            "SleepToBedRatio": 0.868421052631579
+        }
+    }}
