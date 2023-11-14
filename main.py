@@ -1,3 +1,4 @@
+
 import hashlib
 import json
 import secrets
@@ -52,28 +53,46 @@ def index():
 # Route to download the OUSleep Upload Template
 @app.route('/download-template')
 def download_template():
+
     try:
         # Make sure the path to the file is correct and the file exists
         path_to_file = os.path.join(app.root_path, 'JSON Data/OUSleep Upload Template.xlsx')
         return send_file(path_to_file, as_attachment=True)
     except Exception as e:
         app.logger.error(f"An error occurred: {e}")
-        return "An error occurred while trying to download the file.", 500
+        
+        flash("An Error occurred while trying to upload the file", "error")
+        return render_template('homepage.html', username=session['username'])
+    
+    
+    
 # Route to upload a file and process it
-@app.route('/upload', methods=['POST'])
+@app.route('/upload-csv', methods=['POST'])
 def upload_file():
     # Check if the post request has the file part
     if 'file' not in request.files:
-        return 'No file part', 400
+        
+        flash("Error: No file part", "error")
+        return render_template('homepage.html', username=session['username'])
+    
+    
     file = request.files['file']
     
     # If the user does not select a file, the browser submits an empty file without a filename.
     if file.filename == '':
-        return 'No selected file', 400
+        
+        flash("File is not selected, please select a file", "error")
+        return render_template('homepage.html', username=session['username'])
     
     if file and allowed_file(file.filename):
         # Assuming the username is obtained from a session or a database
-        username = 'current_user'  # Replace with actual method to get the current user's username
+        
+        username = session['username'] # Replace with actual method to get the current user's username
+        
+        if not file.filename.endswith('.csv'):
+            
+            flash("Invalid file type. Please upload a CSV file", "error")
+            return render_template('homepage.html', username=session['username'])
         
         # Save the uploaded file
         filepath = os.path.join('UploadedFiles', file.filename)  # Set the path to save the file
@@ -101,7 +120,9 @@ def upload_file():
         # Return success response
 
         # TODO: Need to send a success message to homepage.html that alerts user the data was uploaded, and update pygraphs, instead of redirecting to a json.
-        return jsonify(success=True, message=f"Data for {username} updated successfully.")
+        
+        flash(f"Data for { username } updated successfully.", "success")
+        return render_template('homepage.html', username=session['username'])
    
 
 def allowed_file(filename):
@@ -115,6 +136,8 @@ def process_uploaded_file(filepath):
     encoding = result['encoding']
 
     # Read the CSV file with the detected encoding
+
+    
     df = pd.read_csv(filepath, encoding=encoding, header=None)
     
     # Use the first row as the header
@@ -133,6 +156,8 @@ def process_uploaded_file(filepath):
     
     # Return the processed data
     return {date_key: values}
+
+
 
 
 
