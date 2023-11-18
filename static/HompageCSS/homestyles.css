@@ -126,10 +126,18 @@ body {
 
 
 .Download_Container {
-
-    text-align: left;
-    margin-right: 200px;
+    text-align: center;
+    margin-left: 284px;
+    margin-top: 20px;
     width: 200px;
+    
+}
+
+.Upload_Container {
+    display: flex; /* Use flexbox for the form */
+    align-items: center;
+    margin-left: 130px;
+    margin-top: 50px;
 }
 
 .Download_Button {
@@ -141,13 +149,25 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 12px;
 
+}
+
+.Choose_File {
+    margin-right: 6px;
+    width: 250px;
 }
 
 .Download_Text {
 
     font-size: 12px;
     padding-bottom: 5px;
+}
+
+.Upload_Button {
+
+    margin-left: 6px;
+    width: 120px;
 }
 
 button {
@@ -158,6 +178,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: inline-block;
 }
 a {
     text-decoration: none;

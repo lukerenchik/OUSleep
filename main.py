@@ -37,7 +37,7 @@ s = URLSafeTimedSerializer('439D699B2F1C8BCAD6616AC339CA4')
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-pie_html_instance = PieHtml()
+#pie_html_instance = PieHtml()
 
 # Load user data from the JSON file.
 with open('JSON Data/users.json', 'r') as file:
@@ -71,92 +71,82 @@ def download_template():
 def upload_file():
     # Check if the post request has the file part
     if 'file' not in request.files:
-        
         flash("Error: No file part", "error")
         return render_template('homepage.html', username=session['username'])
-    
-    
+
     file = request.files['file']
-    
+
+    # If the user does not select a file, the browser submits an empty file without a filename.
+    if 'file' not in request.files:
+        flash("Error: No file part", "error")
+        return render_template('homepage.html', username=session['username'])
+
+    file = request.files['file']
+
     # If the user does not select a file, the browser submits an empty file without a filename.
     if file.filename == '':
-        
         flash("File is not selected, please select a file", "error")
         return render_template('homepage.html', username=session['username'])
-    
+
     if file and allowed_file(file.filename):
         # Assuming the username is obtained from a session or a database
-        
-        username = session['username'] # Replace with actual method to get the current user's username
-        
+        username = session['username']  # Replace with the actual method to get the current user's username
+
         if not file.filename.endswith('.csv'):
-            
             flash("Invalid file type. Please upload a CSV file", "error")
             return render_template('homepage.html', username=session['username'])
-        
+
         # Save the uploaded file
         filepath = os.path.join('UploadedFiles', file.filename)  # Set the path to save the file
         file.save(filepath)
 
         # Process the saved file
         processed_data = process_uploaded_file(filepath)
-              # Path to the user's data file
-        user_data_file = os.path.join('UserJsonFiles', f'{username}_data.json')
-        
-        # Read the existing data if the file exists, otherwise create an empty dictionary
-        if os.path.exists(user_data_file):
-            with open(user_data_file, 'r') as file:
-                user_data = json.load(file)
+
+        # Path to the combined JSON file for all users
+        username_file_data_file = os.path.join('UserJsonFiles', 'username_file_data.json')
+
+        # Load existing data or create an empty dictionary
+        if os.path.exists(username_file_data_file):
+            with open(username_file_data_file, 'r') as file:
+                username_file_data = json.load(file)
         else:
-            user_data = {}
+            username_file_data = {}
 
-        # Update the user's data with the new data
-        user_data.update(processed_data)
-        
-        # Write the updated data back to the file
-        with open(user_data_file, 'w') as file:
-            json.dump(user_data, file, indent=4)
-        
+        # Replace the existing data for the current user
+        username_file_data[username] = processed_data
+
+        # Write the updated data back to the combined JSON file
+        with open(username_file_data_file, 'w') as file:
+            json.dump(username_file_data, file, indent=4)
+
         # Return success response
+        flash(f"Data for {username} updated successfully.", "success")
+        return render_template('homepage.html', username=session['username'])
 
-        # TODO: Need to send a success message to homepage.html that alerts user the data was uploaded, and update pygraphs, instead of redirecting to a json.
-        
-        flash(f"Data for { username } updated successfully.", "success")
+    else:
+        flash("Invalid file type. Please upload a CSV file", "error")
         return render_template('homepage.html', username=session['username'])
    
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in {'xlsx', 'csv'}
+           
 
 def process_uploaded_file(filepath):
     # Guess the encoding of the file
     with open(filepath, 'rb') as f:
-        result = chardet.detect(f.read())  # or read a smaller amount of data if the file is very large
+        result = chardet.detect(f.read())
     encoding = result['encoding']
 
     # Read the CSV file with the detected encoding
+    df = pd.read_csv(filepath, encoding=encoding)
 
-    
-    df = pd.read_csv(filepath, encoding=encoding, header=None)
-    
-    # Use the first row as the header
-    header = df.iloc[0]
-    df = df[1:]  # Take the data less the header row
-    df.columns = header  # Set the header row as the df header
-    
-    # Extract the first row as values
-    values = df.iloc[0].to_dict()
-    
-    # Use the 'Date' column as a higher-level key
-    date_key = values['Date']
-    
-    # Remove the 'Date' entry from values
-    values.pop('Date', None)
-    
+    # Convert the DataFrame to a dictionary
+    data_dict = df.to_dict(orient='records')
     # Return the processed data
-    return {date_key: values}
-
+    return data_dict
 
 
 

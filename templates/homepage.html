@@ -67,23 +67,23 @@
 
                 <p class="Sleep_Text">Sleep Score</p>
 
-                <div class="Download_Container">
-                    <p class="Download_Text"> Don't Have a Spreadsheet? Download our template below
-                    </p>
 
-                <a href="/download-template" download>
-                    <button class="Download_Button">OUSleep Blank Template</button>
-                </a>
-
-                </div>
-
-                <div class="Upload_Container">
-
-                    <form action="/upload-csv" method="post" enctype="multipart/form-data">
-                        <input type="file" name="file" accept=".csv">
-                        <button type="submit">Upload File</button>
+                    <form class="Upload_Container" action="/upload-csv" method="post" enctype="multipart/form-data">
+                        <input class="Choose_File" type="file" name="file" accept=".csv">
+                        <button class="Upload_Button" type="submit">Upload File</button>
                     </form>
-                </div>
+                    
+                    <div div class="Download_Container">
+                        <p class="Download_Text"> Don't Have a Spreadsheet? Download our template below
+                        </p>
+    
+                        <a href="/download-template" download>
+                            <button class="Download_Button">OUSleep Blank Template</button>
+                        </a>
+                        
+                    </div>
+    
+                    
 
         <!-- Calendar widget -->
                 <div id="calendar"></div>
