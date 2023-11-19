@@ -1,8 +1,8 @@
 import csv
 from datetime import datetime
 
-csvpath = "/Users/user/PycharmProjects/Baxa_data/sleepStagesDay_merged.csv"
-outputpath = "/Users/user/PycharmProjects/Baxa_data/BaxaActivity.csv"
+csvpath = "Baxa_data/sleepStagesDay_merged.csv"
+outputpath = "Baxa_data/BaxaActivity.csv"
 
 # Open the CSV file at csvpath for reading
 with open(csvpath, 'r') as infile:

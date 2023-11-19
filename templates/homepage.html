@@ -2,59 +2,102 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage</title>
-    <link rel="stylesheet" type="text/css" href="static\HomepageCSS\homestyles.css">
+    <link rel="stylesheet" type="text/css" href="static\HompageCSS\homestyles.css">
+    
     <!-- ... (your existing styles) -->
+    
+
 </head>
 <body>
 
+  
+<!-- Button to download the OUSleep Upload Template -->
+    
 
+    <!-- Form to upload a file -->
+   
 
 
     <div class="basecontainer">
 
-         <div class="Tab-Layout">
+       
+        <div class="Tab-Layout">
+        
+            <p class=OrganizationHeader> OUSleep</p>
+            
+            <p class="Dashboard"> 
+                <a href="http://127.0.0.1:5000/homepage" class="Dashboard-Link"> Dashboard </a> </p>
 
-            <p class=OrganizationHeader> OUSleep
-            </p>
-
-            <p class="Dashboard">
-                <a href="http://127.0.0.1:5000/homepage" class="Dashboard-Link"> Dashboard </a>
+             
+                <p class="Statistics"> 
+                    <a href="http://127.0.0.1:5000/sleep_stats" class="Statistics-Link">  Statistics </a> </p>
 
 
-        </p>
-
-        <!-- Display the username at the top -->
-        <div class="WelcomeUser">
-            <p>Hello {{ username }}</p>
         </div>
 
+
+
+        <div class="WelcomeUser_Container">
+
+            <div class="error-messages">
+                {% with messages = get_flashed_messages(category_filter=["error"]) %}
+                    {% for message in messages %}
+                        <p class="error-label">{{ message }}</p>
+                    {% endfor %}
+                {% endwith %}
+            </div>
+        
+            <div class="success-messages">
+                {% with messages = get_flashed_messages(category_filter=["success"]) %}
+                    {% for message in messages %}
+                        <p class="success-label">{{ message }}</p>
+                    {% endfor %}
+                {% endwith %}
+            </div>
+    
+
+                <div class="Welcome_User_Text">
+                <!-- Display the username at the top -->
+                <p>Welcome, {{ username }}</p>
+
+                </div>
+
+                <p class="Sleep_Text">Sleep Score</p>
+
+
+                    <form class="Upload_Container" action="/upload-csv" method="post" enctype="multipart/form-data">
+                        <input class="Choose_File" type="file" name="file" accept=".csv">
+                        <button class="Upload_Button" type="submit">Upload File</button>
+                    </form>
+                    
+                    <div div class="Download_Container">
+                        <p class="Download_Text"> Don't Have a Spreadsheet? Download our template below
+                        </p>
+    
+                        <a href="/download-template" download>
+                            <button class="Download_Button">OUSleep Blank Template</button>
+                        </a>
+                        
+                    </div>
+    
+                    
+
         <!-- Calendar widget -->
-        <div id="calendar"></div>
+                <div id="calendar"></div>
 
         <!-- Circle widget for sleep score -->
-        <div class="Statistics">
-            <p>Statistics</p>
-            <div class="circle-widget">
-                <div class="circle-widget-child">
-                    <div class="circle-comp"><iframe srcdoc="{{ fig_html[0] }}" frameborder="0" width="100%" height="100%"></iframe></div>
+                <div class="circle-widget">
+                    <div class="circle">
+                        {{ sleep_score }}
+                    </div>
+                    
                 </div>
-                <div class="circle-widget-child">
-                    <p class="score-label">Sleep Score</p>
-                    <div class="circle-score">{{ scores[0] }}</div>
-                </div>
-            </div>
-            <div class="circle-widget">
-                <div class="circle-widget-child">
-                    <div class="circle-comp"><iframe srcdoc="{{ fig_html[1] }}" frameborder="0" width="100%" height="100%"></iframe></div>
-                </div>
-                <div class="circle-widget-child">
-                    <p class="score-label">Health Score</p>
-                    <div class="circle-score">{{ scores[1] }}</div>
-                </div>
-            </div>
-         </div>
-    </p>
+    
+
+    </div>
 
     <!-- Include JavaScript libraries as needed -->
     <!-- For example, include FullCalendar library here -->
@@ -105,4 +148,5 @@
     </script>
 </body>
 </html>
+
 

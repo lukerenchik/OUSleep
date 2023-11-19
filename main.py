@@ -1,10 +1,13 @@
+
 import hashlib
 import json
 import secrets
 import hashlib
 import time
-
-from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify
+import os
+import pandas as pd
+import chardet
+from flask import Flask, render_template, request, redirect, url_for, session, flash, jsonify, send_from_directory, send_file
 from forms import signupForm
 from piechart import PieHtml
 from flask_mail import Mail, Message #use pip install Flask-Mail
@@ -34,10 +37,10 @@ s = URLSafeTimedSerializer('439D699B2F1C8BCAD6616AC339CA4')
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-pie_html_instance = PieHtml()
+#pie_html_instance = PieHtml()
 
 # Load user data from the JSON file.
-with open('users.json', 'r') as file:
+with open('JSON Data/users.json', 'r') as file:
 
     users = json.load(file)
 
@@ -45,6 +48,111 @@ with open('users.json', 'r') as file:
 @app.route('/')
 def index():
     return render_template('preloginhome.html')
+
+# TODO Implement Upload & Download Button in CSS
+# Route to download the OUSleep Upload Template
+@app.route('/download-template')
+def download_template():
+
+    try:
+        # Make sure the path to the file is correct and the file exists
+        path_to_file = os.path.join(app.root_path, 'JSON Data/OUSleep Upload Template.xlsx')
+        return send_file(path_to_file, as_attachment=True)
+    except Exception as e:
+        app.logger.error(f"An error occurred: {e}")
+        
+        flash("An Error occurred while trying to upload the file", "error")
+        return render_template('homepage.html', username=session['username'])
+    
+    
+    
+# Route to upload a file and process it
+@app.route('/upload-csv', methods=['POST'])
+def upload_file():
+    # Check if the post request has the file part
+    if 'file' not in request.files:
+        flash("Error: No file part", "error")
+        return render_template('homepage.html', username=session['username'])
+
+    file = request.files['file']
+
+    # If the user does not select a file, the browser submits an empty file without a filename.
+    if 'file' not in request.files:
+        flash("Error: No file part", "error")
+        return render_template('homepage.html', username=session['username'])
+
+    file = request.files['file']
+
+    # If the user does not select a file, the browser submits an empty file without a filename.
+    if file.filename == '':
+        flash("File is not selected, please select a file", "error")
+        return render_template('homepage.html', username=session['username'])
+
+    if file and allowed_file(file.filename):
+        # Assuming the username is obtained from a session or a database
+        username = session['username']  # Replace with the actual method to get the current user's username
+
+        if not file.filename.endswith('.csv'):
+            flash("Invalid file type. Please upload a CSV file", "error")
+            return render_template('homepage.html', username=session['username'])
+
+        # Save the uploaded file
+        filepath = os.path.join('UploadedFiles', file.filename)  # Set the path to save the file
+        file.save(filepath)
+
+        # Process the saved file
+        processed_data = process_uploaded_file(filepath)
+
+        # Path to the combined JSON file for all users
+        username_file_data_file = os.path.join('UserJsonFiles', 'username_file_data.json')
+
+        # Load existing data or create an empty dictionary
+        if os.path.exists(username_file_data_file):
+            with open(username_file_data_file, 'r') as file:
+                username_file_data = json.load(file)
+        else:
+            username_file_data = {}
+
+        # Replace the existing data for the current user
+        username_file_data[username] = processed_data
+
+        # Write the updated data back to the combined JSON file
+        with open(username_file_data_file, 'w') as file:
+            json.dump(username_file_data, file, indent=4)
+
+        # Return success response
+        flash(f"Data for {username} updated successfully.", "success")
+        return render_template('homepage.html', username=session['username'])
+
+    else:
+        flash("Invalid file type. Please upload a CSV file", "error")
+        return render_template('homepage.html', username=session['username'])
+   
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in {'xlsx', 'csv'}
+           
+
+def process_uploaded_file(filepath):
+    # Guess the encoding of the file
+    with open(filepath, 'rb') as f:
+        result = chardet.detect(f.read())
+    encoding = result['encoding']
+
+    # Read the CSV file with the detected encoding
+    df = pd.read_csv(filepath, encoding=encoding)
+
+    # Convert the DataFrame to a dictionary
+    data_dict = df.to_dict(orient='records')
+    # Return the processed data
+    return data_dict
+
+
+
+
+
+
 
 
 @app.route('/ForgotPW')
@@ -246,6 +354,14 @@ def signup():
         return redirect(url_for('index'))
 
     return render_template('signup.html',title='Sign Up',form=form)
+
+
+@app.route('/sleep_stats')
+def sleep_stats():
+        
+
+    return render_template('sleep_stats.html', username=session['username'])
+
 
 
 # Password hashing function (you should use a secure library for this).
