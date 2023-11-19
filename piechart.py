@@ -1,20 +1,17 @@
 import sleepScore, healthScore
+import re
 import plotly.graph_objects as go
 
-#define variables
-total_sleep_score, sleep_score_composition = sleepScore.get_score_data()
+sleep_score = sleepScore.get_sleep_scores_from_file("JSON Data/updated_data.json")
+sleep_res = list(sleep_score['718OS3'].items())[-1]
+total_sleep_score, sleep_score_composition = sleep_res[1]
+
+health_score = healthScore.get_health_scores_from_file("JSON Data/updated_data.json")
+health_res = list(health_score['718OS3'].items())[-1]
+total_health_score, health_score_composition = health_res[1]
 
 sleep_score_keys = list(sleep_score_composition.keys())
 sleep_score_values = list(sleep_score_composition.values())
-
-total_health_score, health_score_composition = healthScore.get_score_data()
-
-
-def pie_html():
-	return fig_html
-
-#class pie_html():
-	#return fig_html
 
 health_score_keys = list(health_score_composition.keys())
 health_score_values = list(health_score_composition.values())

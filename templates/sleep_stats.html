@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Homepage</title>
-    <link rel="stylesheet" type="text/css" href="static\HompageCSS\homestyles.css">
+    <link rel="stylesheet" type="text/css" href="static\HompageCSS\statistics.css">
     
     <!-- ... (your existing styles) -->
     
@@ -43,17 +43,25 @@
 
         </div>
 
-        <!-- Calendar widget -->
-        <div id="calendar"></div>
-
-        <!-- Circle widget for sleep score -->
+        <p>Statistics</p>
         <div class="circle-widget">
-            <div class="circle">
-                {{ sleep_score }}
+            <div class="circle-widget-child">
+                <div class="circle-comp"><iframe srcdoc="{{ fig_html[0] }}" frameborder="0" width="100%" height="100%"></iframe></div>
             </div>
-            <p>Sleep Score</p>
+            <div class="circle-widget-child">
+                <p class="score-label">Sleep Score</p>
+                <div class="circle-score">{{ scores[0] }}</div>
+            </div>
         </div>
-
+        <div class="circle-widget">
+            <div class="circle-widget-child">
+                <div class="circle-comp"><iframe srcdoc="{{ fig_html[1] }}" frameborder="0" width="100%" height="100%"></iframe></div>
+            </div>
+            <div class="circle-widget-child">
+                <p class="score-label">Health Score</p>
+                <div class="circle-score">{{ scores[1] }}</div>
+            </div>
+        </div>
 
 
     </div>

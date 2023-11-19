@@ -1,8 +1,5 @@
 /* styles.css */
-p {
-    font-family: Arial;
-    text-align: center;
-}
+
 
 body {
     background-image: url('Used_Images/bimg3.png');
@@ -10,6 +7,27 @@ body {
     background-repeat: no-repeat; /* Prevents the image from repeating */
     background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
     background-position: center center;
+    font-family: "Arial";
+    text-align: center;
+
+}
+
+.success-messages, .error-messages {
+
+    text-align: center;
+    font-weight: bold;
+
+}
+
+.error-messages {
+    /* Red background for error messages */
+   color: #f40e0e;
+
+}
+
+.success-messages {
+    /* Green background for success messages */
+   color: #25d253; ;
 
 }
 
@@ -26,12 +44,17 @@ body {
 }
 
 .OrganizationHeader {
+    color: #fff;
     font-size: 20px;
     padding: -2px;
     margin-top: 8px;
     font-family: "Bauhaus 93";
-    margin-left: 10px;
+    margin-left: 8px;
     text-align: left;
+    border-bottom: ridge white ;
+    margin-right: 26px;
+    border-width: 10px;
+    border-radius: 5px;
 
     }
 
@@ -43,11 +66,67 @@ body {
     }
 
     .Dashboard-Link {
-
+        border-bottom: solid beige;
         color: #cbcaca;
     }
 
-.Statistics {
+    .Statistics-Link {
+        border-bottom: solid beige;
+        color: #cbcaca;
+        align: right;
+        width: 100%;
+    }
+
+    .Statistics {
+        width: 15px;
+        padding: 20px;
+        color: #cbcaca;
+    }
+
+
+.Sleep_Text {
+    padding-bottom: 25px;
+
+}
+
+
+.Welcome_User_Text {
+    font-weight: bold;
+    font-family: "Aharoni";
+    font-size: 25px;
+    color: rgb(51, 59, 111);
+    padding-bottom: -3px;
+}
+
+
+
+
+.WelcomeUser_Container {
+   width: 620px;
+    padding: 15px;
+
+
+}
+
+.error-label {
+    color: red;     /* Set text color to red */
+    font-weight: bold;  /* Make text bold */
+}
+
+.basecontainer {
+    margin: 100px auto;
+    width: 1500px;
+    height: 1000px;
+    background-color: #fff;
+    border: 1px none #ffffff;
+    border-radius: 8px;
+
+    box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.1);
+   display: flex;
+
+}
+
+.StatisticsPagexx {
     margin: 100px auto;
     width: 1500px;
     height: 1500px;
@@ -58,75 +137,66 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     }
 
+.Download_Container, .Upload_Container {
 
-
-.WelcomeUser {
-    text-align: left;
-    margin-right: 10px;
+    display:inline-block;
 }
 
 
-
-.WelcomeUser {
-    height: 40px;
-}
-
-
-.error-label {
-    color: red;     /* Set text color to red */
-    font-weight: bold;  /* Make text bold */
-}
-
-.basecontainer {
-    margin: 100px auto;
-    width: 800px;
-    height: 800px;
-    background-color: #fff;
-    border: 1px none #ffffff;
-    border-radius: 8px;
-
-    box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.1);
-   display: flex;
-
-}
-
-button {
-    width: 20%;
-    padding: 10px;
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-a {
-    text-decoration: none;
-    color: #007BFF;
-}
-
-.container h1 {
+.Download_Container {
     text-align: center;
+    margin-left: 284px;
+    margin-top: 20px;
+    width: 200px;
+
 }
-.form-group {
-    text-align: left;
+
+.Upload_Container {
+    display: flex; /* Use flexbox for the form */
+    align-items: center;
+    margin-left: 130px;
+    margin-top: 50px;
 }
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-input[type="text"], input[type="password"], input[type="date"], input[type="email"] {
-    width: 90%;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-button {
-    width: 20%;
+
+.Download_Button {
+    height: 30%;
+    width: 65%;
     padding: 10px;
     background-color: #007BFF;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 12px;
+
+}
+
+.Choose_File {
+    margin-right: 6px;
+    width: 250px;
+}
+
+.Download_Text {
+
+    font-size: 12px;
+    padding-bottom: 5px;
+}
+
+.Upload_Button {
+
+    margin-left: 6px;
+    width: 120px;
+}
+
+button {
+    width: 35%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
 }
 a {
     text-decoration: none;
@@ -135,7 +205,7 @@ a {
 
 .circle-widget {
     width: 100%;
-    height: 35%;
+    height: 40%;
 
 }
 

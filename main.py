@@ -37,7 +37,7 @@ s = URLSafeTimedSerializer('439D699B2F1C8BCAD6616AC339CA4')
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 
-#pie_html_instance = PieHtml()
+pie_html_instance = PieHtml()
 
 # Load user data from the JSON file.
 with open('JSON Data/users.json', 'r') as file:
@@ -358,9 +358,11 @@ def signup():
 
 @app.route('/sleep_stats')
 def sleep_stats():
-        
 
-    return render_template('sleep_stats.html', username=session['username'])
+    fig_html = pie_html_instance.get_fig_html()
+    scores = pie_html_instance.get_scores_to_display()
+
+    return render_template('sleep_stats.html', username=session['username'], fig_html=fig_html, scores=scores)
 
 
 

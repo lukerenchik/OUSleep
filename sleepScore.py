@@ -98,7 +98,7 @@ def calculate_sleep_scores(data):
 
             # Cap the total score to a maximum of 1
             total_score = min(total_score, 1)
-            sleep_scores[user_id][date] = total_score
+            sleep_scores[user_id][date] = [total_score, score_composition]
     return sleep_scores
 
 
