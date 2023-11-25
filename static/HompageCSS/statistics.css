@@ -9,7 +9,7 @@ body {
     background-position: center center;
     font-family: "Arial";
     text-align: center;
-    
+
 }
 
 .success-messages, .error-messages {
@@ -21,13 +21,13 @@ body {
 
 .error-messages {
     /* Red background for error messages */
-   color: #f40e0e; 
- 
+   color: #f40e0e;
+
 }
 
 .success-messages {
     /* Green background for success messages */
-   color: #25d253; ; 
+   color: #25d253; ;
 
 }
 
@@ -55,19 +55,26 @@ body {
     margin-right: 26px;
     border-width: 10px;
     border-radius: 5px;
-    
+
     }
 
     .Dashboard {
 
         font-size: 14px;
         padding-top: 30px;
-      
+
     }
 
-    .Dashboard-Link, .Statistics-Link {
+    .Dashboard-Link {
         border-bottom: solid beige;
         color: #cbcaca;
+    }
+
+    .Statistics-Link {
+        border-bottom: solid beige;
+        color: #cbcaca;
+        align: right;
+        width: 100%;
     }
 
     .Statistics {
@@ -76,7 +83,7 @@ body {
         color: #cbcaca;
     }
 
-    
+
 .Sleep_Text {
     padding-bottom: 25px;
 
@@ -97,8 +104,8 @@ body {
 .WelcomeUser_Container {
    width: 620px;
     padding: 15px;
-    
-    
+
+
 }
 
 .error-label {
@@ -108,16 +115,27 @@ body {
 
 .basecontainer {
     margin: 100px auto;
-    width: 800px;
-    height: 560px;
+    width: 1500px;
+    height: 1000px;
     background-color: #fff;
     border: 1px none #ffffff;
     border-radius: 8px;
-    
+
     box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.1);
    display: flex;
-   
+
 }
+
+.StatisticsPagexx {
+    margin: 100px auto;
+    width: 1500px;
+    height: 1500px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
 
 .Download_Container, .Upload_Container {
 
@@ -130,7 +148,7 @@ body {
     margin-left: 284px;
     margin-top: 20px;
     width: 200px;
-    
+
 }
 
 .Upload_Container {
@@ -183,4 +201,54 @@ button {
 a {
     text-decoration: none;
     color: #007BFF;
+}
+
+.circle-widget {
+    width: 100%;
+    height: 40%;
+
+}
+
+.circle-widget-child {
+    width: 50%;
+    height: 30%;
+    float: left;
+}
+
+.circle-comp {
+    height: 300px;
+    width: 100%;
+}
+
+.circle-score {
+    margin-top: 0%;
+    margin-left: 30.5%;
+    width: 300px;
+    height: 300px;
+    background-color: #3498db; /* Choose your desired background color */
+    border-radius: 50%;
+    color: white;
+    font-size: 24px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.score-label {
+    color: black;
+    font-size: 24px;
+    display: flex
+    justify-content: top;
+    align-items: center;
+}
+
+.iframe-container {
+    width: 100%;
+    height: 100%;
+}
+
+iframe {
+    width: 100%;
+    height: 150%;
 }

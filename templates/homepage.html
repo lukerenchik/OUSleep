@@ -59,43 +59,26 @@
             </div>
     
 
-                <div class="Welcome_User_Text">
+            <div class="Welcome_User_Text">
                 <!-- Display the username at the top -->
                 <p>Welcome, {{ username }}</p>
-
-                </div>
-
-                <p class="Sleep_Text">Sleep Score</p>
+            </div>
 
 
-                    <form class="Upload_Container" action="/upload-csv" method="post" enctype="multipart/form-data">
-                        <input class="Choose_File" type="file" name="file" accept=".csv">
-                        <button class="Upload_Button" type="submit">Upload File</button>
-                    </form>
+            <form class="Upload_Container" action="/upload-csv" method="post" enctype="multipart/form-data">
+                <input class="Choose_File" type="file" name="file" accept=".csv">
+                <button class="Upload_Button" type="submit">Upload File</button>
+            </form>
                     
-                    <div div class="Download_Container">
-                        <p class="Download_Text"> Don't Have a Spreadsheet? Download our template below
-                        </p>
+            <div div class="Download_Container">
+                <p class="Download_Text"> Don't Have a Spreadsheet? Download our template below
+                </p>
     
-                        <a href="/download-template" download>
-                            <button class="Download_Button">OUSleep Blank Template</button>
-                        </a>
+                <a href="/download-template" download>
+                    <button class="Download_Button">OUSleep Blank Template</button>
+                </a>
                         
-                    </div>
-    
-                    
-
-        <!-- Calendar widget -->
-                <div id="calendar"></div>
-
-        <!-- Circle widget for sleep score -->
-                <div class="circle-widget">
-                    <div class="circle">
-                        {{ sleep_score }}
-                    </div>
-                    
-                </div>
-    
+            </div>
 
     </div>
 
