@@ -1,52 +1,124 @@
 /* styles.css */
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-
-
-}
-
-
-
-.error-label {
-    color: red;     /* Set text color to red */
-    font-weight: bold;  /* Make text bold */
-}
-.container {
-    margin: 100px auto;
-    width: 500px;
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
     
-}
-.container h1 {
-    text-align: center;
-}
-.form-group {
-    text-align: left;
-}
-.form-group label {
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-image: url('Pre-Login-Images/Pre_Login_Background.png');
+    background-size: cover; /* Scales the image to cover the entire container */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
+    background-position: center center;
+  }
+
+  h1 {
+    color: rgb(0, 0, 0);
+    font-family: "Bauhaus 93";
+    margin-top: 0px;
+    margin-bottom: 30px;
+  }
+
+  .Website-Title {
+    
+    font-family: "Bauhaus 93";
+    font-size: 28px;
+    color: white;
     display: block;
-    margin-bottom: 5px;
+    text-align: center;
+    margin-bottom: 100px;
+    
+   
+
 }
-input[type="text"], input[type="password"], input[type="date"], input[type="email"] {
-    width: 90%;
-    padding: 10px;
-    margin-bottom: 10px;
+
+.MAIN_CONTAINER {
+    display: flex;
+    text-align: center;
+    position: relative;
+    left: 25%;
+
 }
-button {
-    width: 20%;
+
+
+  .container {
+    background-image: url('Pre-Login-Images/User_Login_Pic.jpg');
+    background-size: cover; /* Scales the image to cover the entire container */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
+    background-position: center center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    border-radius: 8px;
+    width: 400px;
+    text-align: center;
+    display: inline-block;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+
+  }
+
+  .Desc_Title {
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .About_Container {
+    background-image: url('Pre-Login-Images/Desc_Image.jpg');
+    background-size: cover; /* Scales the image to cover the entire container */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
+    background-position: center center;
+    display: inline-block;
+    padding: 25px;
+    border-radius: 8px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+
+  }
+
+  
+
+  .form-group {
+    display: flex;
+    flex-direction: row; /* Change to 'row' instead of 'column' */
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    font-size: 14px;
+    color: #555;
+    margin-right: 8px;
+  }
+
+  .form-group input {
+    width: 100%;
     padding: 10px;
-    background-color: #007BFF;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+  button {
+    background-color: rgb(17,0,102);
     color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-}
-a {
+    transition-duration: 0.3s;
+  }
+
+  button:hover {
+    background-color: rgb(25,82,156);
+  }
+
+  a {
     text-decoration: none;
-    color: #007BFF;
+    color: rgb(17,0,102);
 }

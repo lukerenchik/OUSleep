@@ -4,38 +4,72 @@
     <meta charset="UTF-8">
     <title>Pre-Login Home</title>
     <link rel="stylesheet" type="text/css" href="static/styles.css">
+    <script src="https://kit.fontawesome.com/3cdcde5d05.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
-    <div class="container">
-        <h1>OUSleep</h1>
 
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="error-messages">
-                    {% for message in messages %}
-                        <p class="error-label">{{ message }}</p>
-                    {% endfor %}
+    <p class="Website-Title"> OUSleep </p>
+
+    <div class="MAIN_CONTAINER">
+
+        <div class="About_Container"> 
+            <p class="Desc_Title">
+                What is OUSleep?
+            </p>
+
+            <p class="Desc">
+           
+            OUSleep is designed and programmed <br>
+            to help calculate and display your <br>
+            sleep data with a few clicks of a button! <br>
+            All you need is you need is a template of <br>
+            all your sleep stastistics and data to get <br>
+            started! <br>
+            <br>
+            <br>
+            Don't have a sleep chart on hand? <br>
+            That's okay! Our OUSleep program is <br>
+            designed to not only give you a template, <br> 
+            but replace your stats when needed! <br>
+            <br>
+            Sign Up today to get started!
+
+            </p>
+
+        </div>
+
+        <div class="container">
+            <h1>User Login</h1>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="error-messages">
+                        {% for message in messages %}
+                         <p class="error-label">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form action="/login" method="post">
+                <div class="form-group">
+                    <label for="username"><i class="fas fa-user"></i></label>
+                    <input placeholder="Username" type="text" id="username" name="username" required>
                 </div>
-            {% endif %}
-        {% endwith %}
-
-        <form action="/login" method="post">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <br>
-        <form action="/signup" method="get">
-            <button type="submit">Sign Up</button>
-        </form>
-        <br>
-        <a href="{{ url_for('ForgotPW') }}">Forgot my Password</a>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i></label>
+                    <input placeholder="Password" type="password" id="password" name="password" required>
+             </div>
+                <button type="submit">Login</button>
+            </form>
+            <br>
+            <form action="/signup" method="get">
+                <button type="submit">Sign Up</button>
+            </form>
+            <br>
+            <a href="{{ url_for('ForgotPW') }}">Forgot my Password</a>
     </div>
+</div>
 </body>
 </html>

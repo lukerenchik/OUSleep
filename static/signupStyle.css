@@ -3,6 +3,19 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f0f0f0;
+    background-image: url('Pre-Login-Images/Pre_Login_Background.png');
+    background-size: cover; /* Scales the image to cover the entire container */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
+    background-position: center center;
+}
+
+.Website-Title {
+    
+    font-family: "Bauhaus 93";
+    font-size: 28px;
+    color: white;
+
 }
 
 .error-label {
