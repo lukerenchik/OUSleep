@@ -33,18 +33,22 @@ body {
 
 .Tab-Layout {
     width: 150px; /* Adjust the width as needed for your left tab */
-    background-color: rgba(14, 60, 210, 0.879);
+    background-image: url('../Pre-Login-Images/User_Login_Pic.jpg');
+    background-size: cover; /* Scales the image to cover the entire container */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
+    background-position: center center;
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
     box-sizing: border-box; /* Includes padding in the width */
-    color: #fff;
+    color: #000000;
     border-radius: 8px 1px 1px 8px;
 }
 
 .OrganizationHeader {
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-size: 20px;
     padding: -2px;
     margin-top: 8px;
@@ -67,13 +71,13 @@ body {
 
     .Dashboard-Link, .Statistics-Link {
         border-bottom: solid beige;
-        color: #cbcaca;
+        color: rgb(24,44,171);
     }
 
     .Statistics {
         width: 15px;
         padding: 20px;
-        color: #cbcaca;
+        color: #000000;
     }
 
     

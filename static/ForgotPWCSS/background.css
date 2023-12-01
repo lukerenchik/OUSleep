@@ -84,8 +84,12 @@ p {
 
 }
 
-.Reset_Password_Template{
-    background-color: white;
+.Reset_Password_Template {
+    background-image: url('../Pre-Login-Images/Desc_Image.jpg');
+    background-size: cover; /* Scales the image to cover the entire container */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
+    background-position: center center;
     margin: 100px auto;
     width: 500px;
     padding: 20px;

@@ -122,3 +122,7 @@ body {
     text-decoration: none;
     color: rgb(17,0,102);
 }
+
+.error-label {
+  color: red;
+}
