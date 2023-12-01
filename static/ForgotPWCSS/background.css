@@ -23,8 +23,8 @@ p {
 }
 
 .ForgotPW-Title {
-    
-    font-size: 20px;
+    font-family: "Bauhaus 93";
+    font-size: 28px;
     font-weight: bold;
     margin-top: 40px;
     margin-bottom: 30px;
@@ -112,7 +112,8 @@ p {
     padding-right: 20px;
     border: none;
     border-radius: 4px;
-    background-color: rgb(73, 182, 225);
+    background-color: rgb(17,0,102);
+    color: #fff;
     transition-duration: 0.3s;
     cursor: pointer;
     
@@ -121,7 +122,7 @@ p {
 .Next-Page-Button:hover{
     
     border-color: black;
-    background-color: rgb(30, 30, 142);
+    background-color: rgb(25,82,156);
     text-decoration: none;
     color:rgb(225, 225, 225);
     

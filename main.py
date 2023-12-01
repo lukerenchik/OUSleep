@@ -113,8 +113,10 @@ def upload_file():
         else:
             username_file_data = {}
 
-        # Replace the existing data for the current user
-        username_file_data[username] = processed_data
+        # Add to the existing data for the current user
+        username_data = username_file_data.get(username, [])
+        username_data.extend(processed_data)
+        username_file_data[username] = username_data
 
         # Write the updated data back to the combined JSON file
         with open(username_file_data_file, 'w') as file:
@@ -147,6 +149,33 @@ def process_uploaded_file(filepath):
     data_dict = df.to_dict(orient='records')
     # Return the processed data
     return data_dict
+
+
+
+@app.route('/reset-data', methods=['GET', 'POST'])
+def reset_data():
+    if request.method == 'POST':
+        # Load existing data or create an empty dictionary
+        username_file_data_file = os.path.join('UserJsonFiles', 'username_file_data.json')
+        if os.path.exists(username_file_data_file):
+            with open(username_file_data_file, 'r') as file:
+                username_file_data = json.load(file)
+        else:
+            username_file_data = {}
+
+        # Remove the data for the current user
+        username = session['username']
+        username_file_data.pop(username, None)
+
+        # Write the updated data back to the combined JSON file
+        with open(username_file_data_file, 'w') as file:
+            json.dump(username_file_data, file, indent=4)
+
+        # Return success response
+        flash(f"Data for {username} has been erased", "error")
+        return render_template('homepage.html', username=session['username'])
+
+    return render_template('reset_data.html', username=session['username'])
 
 
 

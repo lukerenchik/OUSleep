@@ -1,5 +1,8 @@
 /* styles.css */
 
+p {
+    color: black;
+}
 
 body {
     background-image: url('Used_Images/bimg3.png');
@@ -33,25 +36,29 @@ body {
 
 .Tab-Layout {
     width: 150px; /* Adjust the width as needed for your left tab */
-    background-color: rgba(14, 60, 210, 0.879);
+    background-image: url('../Pre-Login-Images/User_Login_Pic.jpg');
+    background-size: cover; /* Scales the image to cover the entire container */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Optional: Keeps the background fixed as the page scrolls */
+    background-position: center center;
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 20px;
     box-sizing: border-box; /* Includes padding in the width */
-    color: #fff;
+    color: #000000;
     border-radius: 8px 1px 1px 8px;
 }
 
 .OrganizationHeader {
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-size: 20px;
     padding: -2px;
     margin-top: 8px;
     font-family: "Bauhaus 93";
     margin-left: 8px;
     text-align: left;
-    border-bottom: ridge white ;
+    border-bottom: ridge rgb(43,72,255);
     margin-right: 26px;
     border-width: 10px;
     border-radius: 5px;
@@ -66,21 +73,27 @@ body {
     }
 
     .Dashboard-Link {
-        border-bottom: solid beige;
-        color: #cbcaca;
+        border-bottom: solid rgb(43,72,255);
+        color: rgb(0, 0, 0);
     }
 
     .Statistics-Link {
-        border-bottom: solid beige;
-        color: #cbcaca;
-        align: right;
+        border-bottom: solid rgb(43,72,255);
+        color: rgb(0, 0, 0);
+        text-align: right;
         width: 100%;
+        transition-duration: .3s;
+    }
+
+    .Dashboard-Link:hover, .Statistics-Link:hover {
+
+        color: white;
     }
 
     .Statistics {
         width: 15px;
         padding: 20px;
-        color: #cbcaca;
+        color: #000000;
     }
 
 
@@ -92,7 +105,7 @@ body {
 
 .Welcome_User_Text {
     font-weight: bold;
-    font-family: "Aharoni";
+    font-family:"Bahaus 93";
     font-size: 25px;
     color: rgb(51, 59, 111);
     padding-bottom: -3px;
@@ -233,10 +246,10 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-}
+    }
 
 .score-label {
-    color: black;
+        color: black;
     font-size: 24px;
     display: flex
     justify-content: top;

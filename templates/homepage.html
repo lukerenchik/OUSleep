@@ -35,12 +35,20 @@
                 <p class="Statistics"> 
                     <a href="http://127.0.0.1:5000/sleep_stats" class="Statistics-Link">  Statistics </a> </p>
 
+                <p class="PreLogin">
+                    <a href="http://127.0.0.1:5000/" class="Home-Link"> Back To Login </a> </p>
+
 
         </div>
 
 
 
         <div class="WelcomeUser_Container">
+
+            <div class="Welcome_User_Text">
+                <!-- Display the username at the top -->
+                <p>Welcome, {{ username }}</p>
+            </div>
 
             <div class="error-messages">
                 {% with messages = get_flashed_messages(category_filter=["error"]) %}
@@ -59,11 +67,6 @@
             </div>
     
 
-            <div class="Welcome_User_Text">
-                <!-- Display the username at the top -->
-                <p>Welcome, {{ username }}</p>
-            </div>
-
 
             <form class="Upload_Container" action="/upload-csv" method="post" enctype="multipart/form-data">
                 <input class="Choose_File" type="file" name="file" accept=".csv">
@@ -77,8 +80,13 @@
                 <a href="/download-template" download>
                     <button class="Download_Button">OUSleep Blank Template</button>
                 </a>
+
                         
             </div>
+
+            <form action="{{ url_for('reset_data') }}" method="post">
+                <button class="Reset_Data_btn" type="submit" onclick="confirmReset()">Delete My OUSleep Data</button>
+            </form>
 
     </div>
 
@@ -128,6 +136,15 @@
 
         // Initialize the timer when the page loads
         resetLogoutTimer();
+
+        
+            function confirmReset() {
+                if (confirm("Are you sure you want to reset all your data? All your stored Sleep Information will be lost.")) {
+                    document.getElementById('resetForm').submit();
+                }
+            }
+
+        
     </script>
 </body>
 </html>
