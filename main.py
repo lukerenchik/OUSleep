@@ -334,10 +334,7 @@ def homepage():
     # Check if the user is logged in (session or cookie).
     if 'username' in session:
 
-        fig_html = pie_html_instance.get_fig_html()
-        scores = pie_html_instance.get_scores_to_display()
-
-        return render_template('homepage.html', username=session['username'], fig_html=fig_html, scores=scores)
+        return render_template('homepage.html', username=session['username'])
     else:
         # Redirect to the login page or display a message.
         return redirect(url_for('index'))
@@ -388,8 +385,7 @@ def signup():
 @app.route('/sleep_stats')
 def sleep_stats():
 
-    fig_html = pie_html_instance.get_fig_html()
-    scores = pie_html_instance.get_scores_to_display()
+    fig_html, scores = pie_html_instance.build_statistics(session['username'])
 
     return render_template('sleep_stats.html', username=session['username'], fig_html=fig_html, scores=scores)
 

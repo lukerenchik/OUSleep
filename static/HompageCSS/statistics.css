@@ -111,14 +111,15 @@ body {
     padding-bottom: -3px;
 }
 
-
-
-
-.WelcomeUser_Container {
-   width: 620px;
-    padding: 15px;
-
-
+.header-text {
+    width: 100%;
+    padding: 5px;
+    font-family: "Bahaus 93";
+    color: rgb(51, 59, 111);
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .error-label {
@@ -135,7 +136,7 @@ body {
     border-radius: 8px;
 
     box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.1);
-   display: flex;
+    display: flex;
 
 }
 
@@ -235,7 +236,7 @@ a {
 
 .circle-score {
     margin-top: 0%;
-    margin-left: 30.5%;
+    margin-left: 29%;
     width: 300px;
     height: 300px;
     background-color: #3498db; /* Choose your desired background color */
@@ -251,8 +252,8 @@ a {
 .score-label {
         color: black;
     font-size: 24px;
-    display: flex
-    justify-content: top;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
 
